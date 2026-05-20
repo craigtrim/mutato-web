@@ -1,0 +1,1290 @@
+{
+  "by_predicate": {
+    ":inflection": {
+      "balrog": [
+        "balrogs"
+      ],
+      "being": [
+        "beings"
+      ],
+      "dwarf": [
+        "dwarves"
+      ],
+      "elf": [
+        "elves"
+      ],
+      "ent": [
+        "ents"
+      ],
+      "hobbit": [
+        "hobbits"
+      ],
+      "human": [
+        "humans"
+      ],
+      "maia": [
+        "maiar"
+      ],
+      "orc": [
+        "orcs"
+      ],
+      "realm": [
+        "realms"
+      ],
+      "ring": [
+        "rings"
+      ],
+      "wizard": [
+        "wizards"
+      ]
+    },
+    "rdf:type": {
+      "aragorn": [
+        "human"
+      ],
+      "balrog": [
+        "class"
+      ],
+      "being": [
+        "class"
+      ],
+      "bilbo": [
+        "hobbit"
+      ],
+      "boromir": [
+        "human"
+      ],
+      "durinsbane": [
+        "balrog"
+      ],
+      "dwarf": [
+        "class"
+      ],
+      "elf": [
+        "class"
+      ],
+      "ent": [
+        "class"
+      ],
+      "fangorn": [
+        "realm"
+      ],
+      "frodo": [
+        "hobbit"
+      ],
+      "gandalf": [
+        "wizard"
+      ],
+      "gimli": [
+        "dwarf"
+      ],
+      "gondor": [
+        "realm"
+      ],
+      "hobbit": [
+        "class"
+      ],
+      "human": [
+        "class"
+      ],
+      "legolas": [
+        "elf"
+      ],
+      "lotrmutatoontology": [
+        "ontology"
+      ],
+      "maia": [
+        "class"
+      ],
+      "merry": [
+        "hobbit"
+      ],
+      "mordor": [
+        "realm"
+      ],
+      "moria": [
+        "realm"
+      ],
+      "narya": [
+        "ring"
+      ],
+      "nenya": [
+        "ring"
+      ],
+      "onering": [
+        "ring"
+      ],
+      "orc": [
+        "class"
+      ],
+      "pippin": [
+        "hobbit"
+      ],
+      "radagast": [
+        "wizard"
+      ],
+      "realm": [
+        "class"
+      ],
+      "ring": [
+        "class"
+      ],
+      "rivendell": [
+        "realm"
+      ],
+      "rohan": [
+        "realm"
+      ],
+      "sam": [
+        "hobbit"
+      ],
+      "saruman": [
+        "wizard"
+      ],
+      "shire": [
+        "realm"
+      ],
+      "treebeard": [
+        "ent"
+      ],
+      "vilya": [
+        "ring"
+      ],
+      "wizard": [
+        "class"
+      ]
+    },
+    "rdfs:label": {
+      "aragorn": [],
+      "balrog": [],
+      "being": [],
+      "bilbo": [],
+      "boromir": [],
+      "durinsbane": [
+        "durin's bane"
+      ],
+      "dwarf": [],
+      "elf": [],
+      "ent": [],
+      "fangorn": [
+        "fangorn forest"
+      ],
+      "frodo": [],
+      "gandalf": [],
+      "gimli": [],
+      "gondor": [],
+      "hobbit": [],
+      "human": [],
+      "legolas": [],
+      "lotrmutatoontology": [
+        "lord of the rings mutato ontology"
+      ],
+      "maia": [],
+      "merry": [],
+      "mordor": [],
+      "moria": [],
+      "narya": [],
+      "nenya": [],
+      "onering": [
+        "one ring"
+      ],
+      "orc": [],
+      "pippin": [],
+      "radagast": [],
+      "realm": [],
+      "ring": [],
+      "rivendell": [],
+      "rohan": [],
+      "sam": [],
+      "saruman": [],
+      "shire": [],
+      "treebeard": [],
+      "vilya": [],
+      "wizard": []
+    },
+    "rdfs:subClassOf": {
+      "balrog": [
+        "maia"
+      ],
+      "dwarf": [
+        "being"
+      ],
+      "elf": [
+        "being"
+      ],
+      "ent": [
+        "being"
+      ],
+      "hobbit": [
+        "being"
+      ],
+      "human": [
+        "being"
+      ],
+      "maia": [
+        "being"
+      ],
+      "orc": [
+        "being"
+      ],
+      "wizard": [
+        "maia"
+      ]
+    },
+    "skos:altLabel": {
+      "aragorn": [
+        "elessar",
+        "estel",
+        "strider",
+        "the ranger",
+        "thorongil"
+      ],
+      "bilbo": [
+        "bilbo baggins",
+        "mr baggins"
+      ],
+      "boromir": [
+        "son of denethor"
+      ],
+      "durinsbane": [
+        "balrog of moria",
+        "the balrog of moria"
+      ],
+      "dwarf": [
+        "khazad"
+      ],
+      "elf": [
+        "eldar",
+        "firstborn"
+      ],
+      "ent": [
+        "tree shepherd",
+        "tree-shepherd"
+      ],
+      "fangorn": [
+        "entwood"
+      ],
+      "frodo": [
+        "frodo baggins",
+        "mr frodo",
+        "ring-bearer",
+        "ringbearer"
+      ],
+      "gandalf": [
+        "gandalf the grey",
+        "gandalf the white",
+        "grey pilgrim",
+        "mithrandir",
+        "stormcrow"
+      ],
+      "gimli": [
+        "gimli son of gloin"
+      ],
+      "gondor": [
+        "south-kingdom",
+        "stone-land"
+      ],
+      "hobbit": [
+        "halfling",
+        "halflings"
+      ],
+      "human": [
+        "man",
+        "mortal"
+      ],
+      "legolas": [
+        "legolas greenleaf"
+      ],
+      "merry": [
+        "meriadoc",
+        "meriadoc brandybuck"
+      ],
+      "mordor": [
+        "black land",
+        "land of shadow"
+      ],
+      "moria": [
+        "dwarrowdelf",
+        "khazad-d\u00fbm",
+        "the black pit"
+      ],
+      "narya": [
+        "red ring",
+        "ring of fire"
+      ],
+      "nenya": [
+        "ring of water",
+        "white ring"
+      ],
+      "onering": [
+        "isildur's bane",
+        "precious",
+        "ring of power",
+        "the one ring",
+        "the ring"
+      ],
+      "orc": [
+        "goblin",
+        "goblins"
+      ],
+      "pippin": [
+        "peregrin",
+        "peregrin took"
+      ],
+      "radagast": [
+        "aiwendil",
+        "radagast the brown"
+      ],
+      "realm": [
+        "kingdom",
+        "kingdoms"
+      ],
+      "ring": [
+        "ring of power",
+        "rings of power"
+      ],
+      "rivendell": [
+        "imladris",
+        "last homely house"
+      ],
+      "rohan": [
+        "horse-country",
+        "mark",
+        "riddermark"
+      ],
+      "sam": [
+        "sam gamgee",
+        "samwise",
+        "samwise gamgee"
+      ],
+      "saruman": [
+        "curumo",
+        "saruman the white",
+        "sharkey"
+      ],
+      "shire": [
+        "hobbiton",
+        "s\u00fbza",
+        "the shire"
+      ],
+      "vilya": [
+        "blue ring",
+        "ring of air"
+      ],
+      "wizard": [
+        "istar",
+        "istari"
+      ]
+    }
+  },
+  "children": {
+    "Being": [
+      "Hobbit",
+      "Maia",
+      "Ent",
+      "Orc",
+      "Elf",
+      "Dwarf",
+      "Human"
+    ],
+    "Maia": [
+      "Wizard",
+      "Balrog"
+    ]
+  },
+  "equivalents": null,
+  "labels": {
+    "Aragorn": "Aragorn",
+    "Balrog": "Balrog",
+    "Being": "Being",
+    "Bilbo": "Bilbo",
+    "Boromir": "Boromir",
+    "DurinsBane": "Durin's Bane",
+    "Dwarf": "Dwarf",
+    "Elf": "Elf",
+    "Ent": "Ent",
+    "Fangorn": "Fangorn Forest",
+    "Frodo": "Frodo",
+    "Gandalf": "Gandalf",
+    "Gimli": "Gimli",
+    "Gondor": "Gondor",
+    "Hobbit": "Hobbit",
+    "Human": "Human",
+    "Legolas": "Legolas",
+    "LotrMutatoOntology": "Lord of the Rings Mutato Ontology",
+    "Maia": "Maia",
+    "Merry": "Merry",
+    "Mordor": "Mordor",
+    "Moria": "Moria",
+    "Narya": "Narya",
+    "Nenya": "Nenya",
+    "OneRing": "One Ring",
+    "Orc": "Orc",
+    "Pippin": "Pippin",
+    "Radagast": "Radagast",
+    "Realm": "Realm",
+    "Ring": "Ring",
+    "Rivendell": "Rivendell",
+    "Rohan": "Rohan",
+    "Sam": "Sam",
+    "Saruman": "Saruman",
+    "Shire": "Shire",
+    "Treebeard": "Treebeard",
+    "Vilya": "Vilya",
+    "Wizard": "Wizard"
+  },
+  "ner": {
+    "Aragorn": "NER",
+    "Balrog": "NER",
+    "Being": "NER",
+    "Bilbo": "NER",
+    "Boromir": "NER",
+    "Durin's Bane": "NER",
+    "Dwarf": "NER",
+    "Elf": "NER",
+    "Ent": "NER",
+    "Fangorn Forest": "NER",
+    "Frodo": "NER",
+    "Gandalf": "NER",
+    "Gimli": "NER",
+    "Gondor": "NER",
+    "Hobbit": "NER",
+    "Human": "NER",
+    "Legolas": "NER",
+    "Lord of the Rings Mutato Ontology": "NER",
+    "Maia": "NER",
+    "Merry": "NER",
+    "Mordor": "NER",
+    "Moria": "NER",
+    "Narya": "NER",
+    "Nenya": "NER",
+    "One Ring": "NER",
+    "Orc": "NER",
+    "Pippin": "NER",
+    "Radagast": "NER",
+    "Realm": "NER",
+    "Ring": "NER",
+    "Rivendell": "NER",
+    "Rohan": "NER",
+    "Sam": "NER",
+    "Saruman": "NER",
+    "Shire": "NER",
+    "Treebeard": "NER",
+    "Vilya": "NER",
+    "Wizard": "NER"
+  },
+  "ngrams": {
+    "1": [
+      "hobbit",
+      "maia",
+      "ent",
+      "orc",
+      "elf",
+      "dwarf",
+      "human",
+      "wizard",
+      "balrog"
+    ],
+    "2": [],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  },
+  "parents": {
+    "Balrog": [
+      "Maia"
+    ],
+    "Dwarf": [
+      "Being"
+    ],
+    "Elf": [
+      "Being"
+    ],
+    "Ent": [
+      "Being"
+    ],
+    "Hobbit": [
+      "Being"
+    ],
+    "Human": [
+      "Being"
+    ],
+    "Maia": [
+      "Being"
+    ],
+    "Orc": [
+      "Being"
+    ],
+    "Wizard": [
+      "Maia"
+    ]
+  },
+  "predicates": [
+    ":inflection"
+  ],
+  "spans": {},
+  "synonyms": {
+    "fwd": {
+      "aragorn": [
+        "estel",
+        "elessar",
+        "strider",
+        "aragorn",
+        "thorongil",
+        "the ranger"
+      ],
+      "balrog": [
+        "balrog",
+        "balrogs"
+      ],
+      "being": [
+        "being",
+        "beings"
+      ],
+      "bilbo": [
+        "bilbo",
+        "mr baggins",
+        "bilbo baggins"
+      ],
+      "boromir": [
+        "boromir",
+        "son of denethor"
+      ],
+      "durinsbane": [
+        "durin's bane",
+        "balrog of moria",
+        "the balrog of moria"
+      ],
+      "dwarf": [
+        "dwarf",
+        "khazad",
+        "dwarves"
+      ],
+      "elf": [
+        "elf",
+        "elves",
+        "eldar",
+        "firstborn"
+      ],
+      "ent": [
+        "ent",
+        "ents",
+        "tree shepherd",
+        "tree-shepherd"
+      ],
+      "fangorn": [
+        "fangorn",
+        "entwood",
+        "fangorn forest"
+      ],
+      "frodo": [
+        "frodo",
+        "mr frodo",
+        "ringbearer",
+        "ring-bearer",
+        "frodo baggins"
+      ],
+      "gandalf": [
+        "gandalf",
+        "stormcrow",
+        "mithrandir",
+        "grey pilgrim",
+        "gandalf the grey",
+        "gandalf the white"
+      ],
+      "gimli": [
+        "gimli",
+        "gimli son of gloin"
+      ],
+      "gondor": [
+        "gondor",
+        "stone-land",
+        "south-kingdom"
+      ],
+      "hobbit": [
+        "hobbit",
+        "hobbits",
+        "halfling",
+        "halflings"
+      ],
+      "human": [
+        "man",
+        "human",
+        "mortal",
+        "humans"
+      ],
+      "legolas": [
+        "legolas",
+        "legolas greenleaf"
+      ],
+      "lotrmutatoontology": [
+        "lord of the rings mutato ontology"
+      ],
+      "maia": [
+        "maia",
+        "maiar"
+      ],
+      "merry": [
+        "merry",
+        "meriadoc",
+        "meriadoc brandybuck"
+      ],
+      "mordor": [
+        "mordor",
+        "black land",
+        "land of shadow"
+      ],
+      "moria": [
+        "moria",
+        "khazad-d\u00fbm",
+        "dwarrowdelf",
+        "the black pit"
+      ],
+      "narya": [
+        "narya",
+        "red ring",
+        "ring of fire"
+      ],
+      "nenya": [
+        "nenya",
+        "white ring",
+        "ring of water"
+      ],
+      "onering": [
+        "one ring",
+        "the ring",
+        "precious",
+        "the one ring",
+        "ring of power",
+        "isildur's bane"
+      ],
+      "orc": [
+        "orc",
+        "orcs",
+        "goblin",
+        "goblins"
+      ],
+      "pippin": [
+        "pippin",
+        "peregrin",
+        "peregrin took"
+      ],
+      "radagast": [
+        "radagast",
+        "aiwendil",
+        "radagast the brown"
+      ],
+      "realm": [
+        "realm",
+        "realms",
+        "kingdom",
+        "kingdoms"
+      ],
+      "ring": [
+        "ring",
+        "rings",
+        "ring of power",
+        "rings of power"
+      ],
+      "rivendell": [
+        "imladris",
+        "rivendell",
+        "last homely house"
+      ],
+      "rohan": [
+        "mark",
+        "rohan",
+        "riddermark",
+        "horse-country"
+      ],
+      "sam": [
+        "sam",
+        "samwise",
+        "sam gamgee",
+        "samwise gamgee"
+      ],
+      "saruman": [
+        "curumo",
+        "saruman",
+        "sharkey",
+        "saruman the white"
+      ],
+      "shire": [
+        "s\u00fbza",
+        "shire",
+        "hobbiton",
+        "the shire"
+      ],
+      "treebeard": [
+        "treebeard"
+      ],
+      "vilya": [
+        "vilya",
+        "blue ring",
+        "ring of air"
+      ],
+      "wizard": [
+        "istar",
+        "wizard",
+        "istari",
+        "wizards"
+      ]
+    },
+    "lookup": {
+      "1": [
+        "lotrmutatoontology",
+        "south-kingdom",
+        "horse-country",
+        "tree-shepherd",
+        "dwarrowdelf",
+        "ring-bearer",
+        "ringbearer",
+        "stone-land",
+        "riddermark",
+        "durinsbane",
+        "mithrandir",
+        "khazad-d\u00fbm",
+        "halflings",
+        "rivendell",
+        "stormcrow",
+        "thorongil",
+        "firstborn",
+        "treebeard",
+        "radagast",
+        "hobbiton",
+        "aiwendil",
+        "kingdoms",
+        "meriadoc",
+        "halfling",
+        "imladris",
+        "precious",
+        "peregrin",
+        "dwarves",
+        "entwood",
+        "onering",
+        "strider",
+        "kingdom",
+        "goblins",
+        "wizards",
+        "boromir",
+        "fangorn",
+        "legolas",
+        "hobbits",
+        "aragorn",
+        "saruman",
+        "elessar",
+        "samwise",
+        "gandalf",
+        "balrogs",
+        "sharkey",
+        "mordor",
+        "khazad",
+        "gondor",
+        "realms",
+        "pippin",
+        "curumo",
+        "istari",
+        "hobbit",
+        "beings",
+        "humans",
+        "balrog",
+        "mortal",
+        "goblin",
+        "wizard",
+        "maiar",
+        "frodo",
+        "elves",
+        "bilbo",
+        "istar",
+        "moria",
+        "eldar",
+        "realm",
+        "narya",
+        "merry",
+        "shire",
+        "gimli",
+        "vilya",
+        "nenya",
+        "human",
+        "being",
+        "rings",
+        "dwarf",
+        "rohan",
+        "estel",
+        "ents",
+        "orcs",
+        "ring",
+        "mark",
+        "maia",
+        "s\u00fbza",
+        "ent",
+        "man",
+        "orc",
+        "elf",
+        "sam"
+      ],
+      "2": [
+        "meriadoc brandybuck",
+        "radagast_the brown",
+        "legolas greenleaf",
+        "last_homely house",
+        "saruman_the white",
+        "gandalf_the white",
+        "gandalf_the grey",
+        "isildur's bane",
+        "fangorn forest",
+        "samwise gamgee",
+        "peregrin took",
+        "bilbo baggins",
+        "frodo baggins",
+        "the_black pit",
+        "tree shepherd",
+        "durin's bane",
+        "grey pilgrim",
+        "the_one ring",
+        "black land",
+        "white ring",
+        "mr baggins",
+        "sam gamgee",
+        "the ranger",
+        "blue ring",
+        "the shire",
+        "the ring",
+        "one ring",
+        "mr frodo",
+        "red ring"
+      ],
+      "3": [
+        "radagast the brown",
+        "gandalf the white",
+        "last homely house",
+        "saruman the white",
+        "gandalf the grey",
+        "balrog of moria",
+        "son of denethor",
+        "rings of power",
+        "land of shadow",
+        "ring of power",
+        "the black pit",
+        "ring of water",
+        "the one ring",
+        "ring of fire",
+        "ring of air"
+      ],
+      "4": [
+        "the balrog of moria",
+        "gimli son of gloin"
+      ],
+      "5": [],
+      "6": [
+        "lord of the rings mutato ontology"
+      ]
+    },
+    "rev": {
+      "aiwendil": [
+        "radagast"
+      ],
+      "aragorn": [
+        "aragorn"
+      ],
+      "balrog": [
+        "balrog"
+      ],
+      "balrog of moria": [
+        "durinsbane"
+      ],
+      "balrogs": [
+        "balrog"
+      ],
+      "being": [
+        "being"
+      ],
+      "beings": [
+        "being"
+      ],
+      "bilbo": [
+        "bilbo"
+      ],
+      "bilbo baggins": [
+        "bilbo"
+      ],
+      "black land": [
+        "mordor"
+      ],
+      "blue ring": [
+        "vilya"
+      ],
+      "boromir": [
+        "boromir"
+      ],
+      "curumo": [
+        "saruman"
+      ],
+      "durin's bane": [
+        "durinsbane"
+      ],
+      "dwarf": [
+        "dwarf"
+      ],
+      "dwarrowdelf": [
+        "moria"
+      ],
+      "dwarves": [
+        "dwarf"
+      ],
+      "eldar": [
+        "elf"
+      ],
+      "elessar": [
+        "aragorn"
+      ],
+      "elf": [
+        "elf"
+      ],
+      "elves": [
+        "elf"
+      ],
+      "ent": [
+        "ent"
+      ],
+      "ents": [
+        "ent"
+      ],
+      "entwood": [
+        "fangorn"
+      ],
+      "estel": [
+        "aragorn"
+      ],
+      "fangorn": [
+        "fangorn"
+      ],
+      "fangorn forest": [
+        "fangorn"
+      ],
+      "firstborn": [
+        "elf"
+      ],
+      "frodo": [
+        "frodo"
+      ],
+      "frodo baggins": [
+        "frodo"
+      ],
+      "gandalf": [
+        "gandalf"
+      ],
+      "gandalf the grey": [
+        "gandalf"
+      ],
+      "gandalf the white": [
+        "gandalf"
+      ],
+      "gimli": [
+        "gimli"
+      ],
+      "gimli son of gloin": [
+        "gimli"
+      ],
+      "goblin": [
+        "orc"
+      ],
+      "goblins": [
+        "orc"
+      ],
+      "gondor": [
+        "gondor"
+      ],
+      "grey pilgrim": [
+        "gandalf"
+      ],
+      "halfling": [
+        "hobbit"
+      ],
+      "halflings": [
+        "hobbit"
+      ],
+      "hobbit": [
+        "hobbit"
+      ],
+      "hobbiton": [
+        "shire"
+      ],
+      "hobbits": [
+        "hobbit"
+      ],
+      "horse-country": [
+        "rohan"
+      ],
+      "human": [
+        "human"
+      ],
+      "humans": [
+        "human"
+      ],
+      "imladris": [
+        "rivendell"
+      ],
+      "isildur's bane": [
+        "onering"
+      ],
+      "istar": [
+        "wizard"
+      ],
+      "istari": [
+        "wizard"
+      ],
+      "khazad": [
+        "dwarf"
+      ],
+      "khazad-d\u00fbm": [
+        "moria"
+      ],
+      "kingdom": [
+        "realm"
+      ],
+      "kingdoms": [
+        "realm"
+      ],
+      "land of shadow": [
+        "mordor"
+      ],
+      "last homely house": [
+        "rivendell"
+      ],
+      "legolas": [
+        "legolas"
+      ],
+      "legolas greenleaf": [
+        "legolas"
+      ],
+      "lord of the rings mutato ontology": [
+        "lotrmutatoontology"
+      ],
+      "maia": [
+        "maia"
+      ],
+      "maiar": [
+        "maia"
+      ],
+      "man": [
+        "human"
+      ],
+      "mark": [
+        "rohan"
+      ],
+      "meriadoc": [
+        "merry"
+      ],
+      "meriadoc brandybuck": [
+        "merry"
+      ],
+      "merry": [
+        "merry"
+      ],
+      "mithrandir": [
+        "gandalf"
+      ],
+      "mordor": [
+        "mordor"
+      ],
+      "moria": [
+        "moria"
+      ],
+      "mortal": [
+        "human"
+      ],
+      "mr baggins": [
+        "bilbo"
+      ],
+      "mr frodo": [
+        "frodo"
+      ],
+      "narya": [
+        "narya"
+      ],
+      "nenya": [
+        "nenya"
+      ],
+      "one ring": [
+        "onering"
+      ],
+      "orc": [
+        "orc"
+      ],
+      "orcs": [
+        "orc"
+      ],
+      "peregrin": [
+        "pippin"
+      ],
+      "peregrin took": [
+        "pippin"
+      ],
+      "pippin": [
+        "pippin"
+      ],
+      "precious": [
+        "onering"
+      ],
+      "radagast": [
+        "radagast"
+      ],
+      "radagast the brown": [
+        "radagast"
+      ],
+      "realm": [
+        "realm"
+      ],
+      "realms": [
+        "realm"
+      ],
+      "red ring": [
+        "narya"
+      ],
+      "riddermark": [
+        "rohan"
+      ],
+      "ring": [
+        "ring"
+      ],
+      "ring of air": [
+        "vilya"
+      ],
+      "ring of fire": [
+        "narya"
+      ],
+      "ring of power": [
+        "ring",
+        "onering"
+      ],
+      "ring of water": [
+        "nenya"
+      ],
+      "ring-bearer": [
+        "frodo"
+      ],
+      "ringbearer": [
+        "frodo"
+      ],
+      "rings": [
+        "ring"
+      ],
+      "rings of power": [
+        "ring"
+      ],
+      "rivendell": [
+        "rivendell"
+      ],
+      "rohan": [
+        "rohan"
+      ],
+      "sam": [
+        "sam"
+      ],
+      "sam gamgee": [
+        "sam"
+      ],
+      "samwise": [
+        "sam"
+      ],
+      "samwise gamgee": [
+        "sam"
+      ],
+      "saruman": [
+        "saruman"
+      ],
+      "saruman the white": [
+        "saruman"
+      ],
+      "sharkey": [
+        "saruman"
+      ],
+      "shire": [
+        "shire"
+      ],
+      "son of denethor": [
+        "boromir"
+      ],
+      "south-kingdom": [
+        "gondor"
+      ],
+      "stone-land": [
+        "gondor"
+      ],
+      "stormcrow": [
+        "gandalf"
+      ],
+      "strider": [
+        "aragorn"
+      ],
+      "s\u00fbza": [
+        "shire"
+      ],
+      "the balrog of moria": [
+        "durinsbane"
+      ],
+      "the black pit": [
+        "moria"
+      ],
+      "the one ring": [
+        "onering"
+      ],
+      "the ranger": [
+        "aragorn"
+      ],
+      "the ring": [
+        "onering"
+      ],
+      "the shire": [
+        "shire"
+      ],
+      "thorongil": [
+        "aragorn"
+      ],
+      "tree shepherd": [
+        "ent"
+      ],
+      "tree-shepherd": [
+        "ent"
+      ],
+      "treebeard": [
+        "treebeard"
+      ],
+      "vilya": [
+        "vilya"
+      ],
+      "white ring": [
+        "nenya"
+      ],
+      "wizard": [
+        "wizard"
+      ],
+      "wizards": [
+        "wizard"
+      ]
+    }
+  },
+  "trie": {
+    "1": [
+      "wizard",
+      "hobbit",
+      "balrog",
+      "dwarf",
+      "human",
+      "maia",
+      "orc",
+      "ent",
+      "elf"
+    ],
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  }
+}

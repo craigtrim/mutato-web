@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.88em' font-size='96' font-weight='bold' fill='%23cc4400'>λ</text></svg>">
+    <title>Mutato Entity Extraction</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { background-color: #f8fafc; }
+
+      @keyframes mutato-spin { to { transform: rotate(360deg); } }
+      .mutato-spinner {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: mutato-spin 0.7s linear infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/main.jsx"></script>
+  </body>
+</html>

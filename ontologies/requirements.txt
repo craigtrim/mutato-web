@@ -1,0 +1,2 @@
+mutato>=1.1.1
+rdflib

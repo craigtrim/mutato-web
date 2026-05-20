@@ -1,0 +1,236 @@
+# Lord of the Rings ontology for mutato entity extraction
+#
+# Extension of site/articles/what-is-an-ontology/builder/lotr.ttl with the
+# additional annotations mutato uses to drive its three matching passes:
+#
+#   skos:altLabel    feeds the synonym lookup (exact-match pass)
+#   :inflection      feeds the synonym lookup (exact-match pass)
+#   rdfs:subClassOf  feeds the taxonomy (hierarchy-match pass)
+#
+# The original lotr.ttl is preserved as-is; this file is the entity-
+# extraction-ready variant. Both files describe the same domain.
+
+@prefix : <https://craigtrim.com/ontologies/lotr-mutato#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:LotrMutatoOntology a owl:Ontology ;
+    rdfs:label "Lord of the Rings Mutato Ontology" ;
+    rdfs:comment "Entity-extraction variant of the LOTR teaching ontology." .
+
+# CLASSES (with inflections so plurals map to the canonical singular)
+
+:Being a owl:Class ;
+    rdfs:label "Being" ;
+    :inflection "beings" .
+
+:Hobbit a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Hobbit" ;
+    skos:altLabel "halfling" ;
+    skos:altLabel "halflings" ;
+    :inflection "hobbits" .
+
+:Maia a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Maia" ;
+    :inflection "maiar" .
+
+:Wizard a owl:Class ;
+    rdfs:subClassOf :Maia ;
+    rdfs:label "Wizard" ;
+    skos:altLabel "istar" ;
+    skos:altLabel "istari" ;
+    :inflection "wizards" .
+
+:Balrog a owl:Class ;
+    rdfs:subClassOf :Maia ;
+    rdfs:label "Balrog" ;
+    :inflection "balrogs" .
+
+:Ent a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Ent" ;
+    skos:altLabel "tree-shepherd" ;
+    skos:altLabel "tree shepherd" ;
+    :inflection "ents" .
+
+:Orc a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Orc" ;
+    skos:altLabel "goblin" ;
+    skos:altLabel "goblins" ;
+    :inflection "orcs" .
+
+:Elf a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Elf" ;
+    skos:altLabel "eldar" ;
+    skos:altLabel "firstborn" ;
+    :inflection "elves" .
+
+:Dwarf a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Dwarf" ;
+    skos:altLabel "khazad" ;
+    :inflection "dwarves" .
+
+:Human a owl:Class ;
+    rdfs:subClassOf :Being ;
+    rdfs:label "Human" ;
+    skos:altLabel "man" ;
+    skos:altLabel "mortal" ;
+    :inflection "humans" .
+
+:Ring a owl:Class ;
+    rdfs:label "Ring" ;
+    skos:altLabel "ring of power" ;
+    skos:altLabel "rings of power" ;
+    :inflection "rings" .
+
+:Realm a owl:Class ;
+    rdfs:label "Realm" ;
+    skos:altLabel "kingdom" ;
+    skos:altLabel "kingdoms" ;
+    :inflection "realms" .
+
+# INSTANCES (with skos:altLabel for the canonical-name lookup)
+
+:Frodo a :Hobbit ;
+    rdfs:label "Frodo" ;
+    skos:altLabel "Frodo Baggins" ;
+    skos:altLabel "Mr Frodo" ;
+    skos:altLabel "ringbearer" ;
+    skos:altLabel "ring-bearer" .
+
+:Bilbo a :Hobbit ;
+    rdfs:label "Bilbo" ;
+    skos:altLabel "Bilbo Baggins" ;
+    skos:altLabel "Mr Baggins" .
+
+:Sam a :Hobbit ;
+    rdfs:label "Sam" ;
+    skos:altLabel "Samwise" ;
+    skos:altLabel "Samwise Gamgee" ;
+    skos:altLabel "Sam Gamgee" .
+
+:Merry a :Hobbit ;
+    rdfs:label "Merry" ;
+    skos:altLabel "Meriadoc" ;
+    skos:altLabel "Meriadoc Brandybuck" .
+
+:Pippin a :Hobbit ;
+    rdfs:label "Pippin" ;
+    skos:altLabel "Peregrin" ;
+    skos:altLabel "Peregrin Took" .
+
+:Gandalf a :Wizard ;
+    rdfs:label "Gandalf" ;
+    skos:altLabel "Mithrandir" ;
+    skos:altLabel "Grey Pilgrim" ;
+    skos:altLabel "Stormcrow" ;
+    skos:altLabel "Gandalf the Grey" ;
+    skos:altLabel "Gandalf the White" .
+
+:Saruman a :Wizard ;
+    rdfs:label "Saruman" ;
+    skos:altLabel "Saruman the White" ;
+    skos:altLabel "Curumo" ;
+    skos:altLabel "Sharkey" .
+
+:Radagast a :Wizard ;
+    rdfs:label "Radagast" ;
+    skos:altLabel "Radagast the Brown" ;
+    skos:altLabel "Aiwendil" .
+
+:Aragorn a :Human ;
+    rdfs:label "Aragorn" ;
+    skos:altLabel "Strider" ;
+    skos:altLabel "Estel" ;
+    skos:altLabel "Elessar" ;
+    skos:altLabel "the Ranger" ;
+    skos:altLabel "Thorongil" .
+
+:Legolas a :Elf ;
+    rdfs:label "Legolas" ;
+    skos:altLabel "Legolas Greenleaf" .
+
+:Gimli a :Dwarf ;
+    rdfs:label "Gimli" ;
+    skos:altLabel "Gimli son of Gloin" .
+
+:Boromir a :Human ;
+    rdfs:label "Boromir" ;
+    skos:altLabel "son of Denethor" .
+
+:Treebeard a :Ent ;
+    rdfs:label "Treebeard" .
+
+:DurinsBane a :Balrog ;
+    rdfs:label "Durin's Bane" ;
+    skos:altLabel "the Balrog of Moria" ;
+    skos:altLabel "Balrog of Moria" .
+
+:OneRing a :Ring ;
+    rdfs:label "One Ring" ;
+    skos:altLabel "the One Ring" ;
+    skos:altLabel "the Ring" ;
+    skos:altLabel "Precious" ;
+    skos:altLabel "Ring of Power" ;
+    skos:altLabel "Isildur's Bane" .
+
+:Narya a :Ring ;
+    rdfs:label "Narya" ;
+    skos:altLabel "Ring of Fire" ;
+    skos:altLabel "Red Ring" .
+
+:Nenya a :Ring ;
+    rdfs:label "Nenya" ;
+    skos:altLabel "Ring of Water" ;
+    skos:altLabel "White Ring" .
+
+:Vilya a :Ring ;
+    rdfs:label "Vilya" ;
+    skos:altLabel "Ring of Air" ;
+    skos:altLabel "Blue Ring" .
+
+:Shire a :Realm ;
+    rdfs:label "Shire" ;
+    skos:altLabel "the Shire" ;
+    skos:altLabel "Hobbiton" ;
+    skos:altLabel "Sûza" .
+
+:Mordor a :Realm ;
+    rdfs:label "Mordor" ;
+    skos:altLabel "Black Land" ;
+    skos:altLabel "Land of Shadow" .
+
+:Moria a :Realm ;
+    rdfs:label "Moria" ;
+    skos:altLabel "Khazad-dûm" ;
+    skos:altLabel "Dwarrowdelf" ;
+    skos:altLabel "the Black Pit" .
+
+:Rivendell a :Realm ;
+    rdfs:label "Rivendell" ;
+    skos:altLabel "Imladris" ;
+    skos:altLabel "Last Homely House" .
+
+:Gondor a :Realm ;
+    rdfs:label "Gondor" ;
+    skos:altLabel "South-kingdom" ;
+    skos:altLabel "Stone-land" .
+
+:Rohan a :Realm ;
+    rdfs:label "Rohan" ;
+    skos:altLabel "Riddermark" ;
+    skos:altLabel "Mark" ;
+    skos:altLabel "Horse-country" .
+
+:Fangorn a :Realm ;
+    rdfs:label "Fangorn Forest" ;
+    skos:altLabel "Fangorn" ;
+    skos:altLabel "Entwood" .
