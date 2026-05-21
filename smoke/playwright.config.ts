@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   retries: 1,
-  reporter: [['list']],
+  reporter: [['./reporter.ts']],
   expect: {
     timeout: 15_000,
   },
