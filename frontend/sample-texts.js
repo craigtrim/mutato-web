@@ -24,4 +24,7 @@ export const SAMPLES = {
     'The triage nurse documented elevated blood pressure and treated the migraine with ibuprofen.',
     'An asthma exacerbation responded well to albuterol nebulization and prednisone.',
   ],
+  smoketest: [
+    'The sedan and the pickup were parked next to several cars and trucks.',
+  ],
 }

@@ -1,0 +1,42 @@
+# Smoke-test ontology for mutato-web Playwright suite
+#
+# Deliberately tiny. Used only by smoke tests that CRUD-modify the
+# ontology in-browser. Each test starts from this pristine snapshot
+# (the reset button reverts to it) so tests are independent.
+
+@prefix : <https://craigtrim.com/ontologies/smoketest-mutato#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:SmokeTestOntology a owl:Ontology ;
+    rdfs:label "Smoke Test Mutato Ontology" ;
+    rdfs:comment "Tiny ontology used exclusively by the Playwright smoke suite for CRUD round-trip tests." .
+
+# CLASSES
+
+:Vehicle a owl:Class ;
+    rdfs:label "Vehicle" ;
+    :inflection "vehicles" .
+
+:Car a owl:Class ;
+    rdfs:subClassOf :Vehicle ;
+    rdfs:label "Car" ;
+    skos:altLabel "automobile" ;
+    :inflection "cars" .
+
+:Truck a owl:Class ;
+    rdfs:subClassOf :Vehicle ;
+    rdfs:label "Truck" ;
+    :inflection "trucks" .
+
+# INSTANCES
+
+:Sedan a :Car ;
+    rdfs:label "Sedan" ;
+    skos:altLabel "saloon" .
+
+:Pickup a :Truck ;
+    rdfs:label "Pickup" .

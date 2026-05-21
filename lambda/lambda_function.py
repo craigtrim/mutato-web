@@ -26,7 +26,7 @@ MAX_TEXT_LENGTH = 5000
 MAX_TTL_LENGTH = 400_000
 MAX_CACHED_INLINE_PARSERS = 20
 ONTOLOGIES_DIR = Path(__file__).resolve().parent / "ontologies"
-VALID_ONTOLOGIES = {"lotr", "oilgas", "healthcare"}
+VALID_ONTOLOGIES = {"lotr", "oilgas", "healthcare", "smoketest"}
 
 # Origin allow-list. Requests whose Origin header is not in this set are
 # rejected with 403, including requests with no Origin header. Browsers set

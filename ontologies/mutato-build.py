@@ -28,6 +28,8 @@ TARGETS = [
      "https://craigtrim.com/ontologies/oilgas-mutato"),
     ("healthcare-mutato.owl", "healthcare",
      "https://craigtrim.com/ontologies/healthcare-mutato"),
+    ("smoketest-mutato.owl",  "smoketest",
+     "https://craigtrim.com/ontologies/smoketest-mutato"),
 ]
 
 
