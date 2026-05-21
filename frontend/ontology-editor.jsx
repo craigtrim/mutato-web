@@ -110,7 +110,13 @@ function firstTopLevelClass(entities) {
 export default function OntologyEditor({
   state, setState,
   selectedName, onSelect,
+  // 'shown' (default) renders the resizable detail panel below the tree.
+  // 'hidden' suppresses both the panel and the resize handle so the tree
+  // takes the full rail height — used when the center pane is on the
+  // Entity tab, where the same fields live in a larger form.
+  detailMode = 'shown',
 }) {
+  const detailVisible = detailMode !== 'hidden'
   const [query, setQuery] = useState('')
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [menu, setMenu] = useState(null)  // { x, y, name }
@@ -545,31 +551,35 @@ export default function OntologyEditor({
         )}
       />
 
-      <div
-        style={resizeHandleStyle(isResizing)}
-        onMouseDown={startResize}
-        onDoubleClick={resetResize}
-        title="Drag to resize · double-click to reset"
-        role="separator"
-        aria-orientation="horizontal"
-      >
-        <div style={resizeHandleLineStyle(isResizing)} />
-      </div>
-
-      <div style={{ ...detailContainer, height: detailHeight }}>
-        {selected ? (
-          <EntityDetail
-            state={state}
-            setState={setState}
-            entity={selected}
-            onClose={() => onSelect(null)}
-          />
-        ) : (
-          <div style={{ padding: '12px 4px', fontSize: 12, color: '#94a3b8' }}>
-            Select an entity to edit its labels and synonyms.
+      {detailVisible && (
+        <>
+          <div
+            style={resizeHandleStyle(isResizing)}
+            onMouseDown={startResize}
+            onDoubleClick={resetResize}
+            title="Drag to resize · double-click to reset"
+            role="separator"
+            aria-orientation="horizontal"
+          >
+            <div style={resizeHandleLineStyle(isResizing)} />
           </div>
-        )}
-      </div>
+
+          <div style={{ ...detailContainer, height: detailHeight }}>
+            {selected ? (
+              <EntityDetail
+                state={state}
+                setState={setState}
+                entity={selected}
+                onClose={() => onSelect(null)}
+              />
+            ) : (
+              <div style={{ padding: '12px 4px', fontSize: 12, color: '#94a3b8' }}>
+                Select an entity to edit its labels and synonyms.
+              </div>
+            )}
+          </div>
+        </>
+      )}
 
       {menu && (
         <ContextMenu
@@ -845,17 +855,35 @@ function ContextMenu({ x, y, entity, atLimit, onAction, onClose }) {
       {items.map((item, i) => item.sep
         ? <div key={`s${i}`} style={menuSeparator} />
         : (
-          <div
+          <MenuItem
             key={item.action}
+            label={item.label}
+            danger={item.danger}
+            disabled={item.disabled}
             onClick={() => !item.disabled && onAction(item.action)}
-            style={menuItemStyle(item.danger, item.disabled)}
-            role="menuitem"
-            aria-disabled={item.disabled || false}
-          >
-            {item.label}
-          </div>
+          />
         )
       )}
+    </div>
+  )
+}
+
+// Single context-menu row. Tracks its own hover state so each item gets
+// visible feedback on mouse-over (matches the convention of native OS
+// context menus). Inline styles meant the original `<div>` had no
+// :hover affordance; this restores that.
+function MenuItem({ label, danger, disabled, onClick }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => !disabled && setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={menuItemStyle(danger, disabled, hovered)}
+      role="menuitem"
+      aria-disabled={disabled || false}
+    >
+      {label}
     </div>
   )
 }
@@ -926,7 +954,7 @@ function EntityDetail({ state, setState, entity, onClose }) {
   )
 }
 
-function ChipEditor({ items, onAdd, onRemove, placeholder, accent }) {
+export function ChipEditor({ items, onAdd, onRemove, placeholder, accent, listId }) {
   const [draft, setDraft] = useState('')
   const inputRef = useRef(null)
 
@@ -966,6 +994,7 @@ function ChipEditor({ items, onAdd, onRemove, placeholder, accent }) {
         onChange={e => setDraft(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); submit() } }}
         placeholder={placeholder}
+        list={listId}
         style={{ ...detailInput, fontSize: 12 }}
       />
     </div>
@@ -1076,13 +1105,19 @@ const menuHeader = {
   fontSize: 12, fontWeight: 600, color: '#0f172a',
   display: 'flex', alignItems: 'center',
 }
-const menuItemStyle = (danger, disabled) => ({
-  padding: '6px 14px',
-  fontSize: 13,
-  color: disabled ? '#cbd5e1' : (danger ? '#b91c1c' : '#0f172a'),
-  cursor: disabled ? 'default' : 'pointer',
-  userSelect: 'none',
-})
+const menuItemStyle = (danger, disabled, hovered) => {
+  let background = 'transparent'
+  if (!disabled && hovered) background = danger ? '#fef2f2' : '#f1f5f9'
+  return {
+    padding: '6px 14px',
+    fontSize: 13,
+    color: disabled ? '#cbd5e1' : (danger ? '#b91c1c' : '#0f172a'),
+    cursor: disabled ? 'default' : 'pointer',
+    userSelect: 'none',
+    background,
+    transition: 'background 0.08s',
+  }
+}
 const menuSeparator = {
   height: 1, background: '#f1f5f9', margin: '4px 0',
 }

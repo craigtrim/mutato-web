@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { API_URL, ONTOLOGIES, MAX_INPUT_LEN } from './config.js'
 import { SAMPLES } from './sample-texts.js'
 import OntologyEditor from './ontology-editor.jsx'
+import EntityEditor from './entity-editor.jsx'
 import {
   DEFAULT_NAMESPACE,
   mdaToEntities, entitiesToTtl,
@@ -43,6 +44,9 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [showSlowHint, setShowSlowHint] = useState(false)
   const [error, setError] = useState(null)
+  // Center pane tab. 'test' shows the NLP Testing workflow; 'entity' shows
+  // the expanded entity editor. Resets to 'test' on ontology change.
+  const [activeTab, setActiveTab] = useState('test')
   const samples = SAMPLES[ontologyId] || []
 
   // Mutato returns canonical names lowercased (e.g. "onering", "shire").
@@ -68,6 +72,7 @@ export default function App() {
   useEffect(() => {
     setSelectedName(null)
     setResult(null)
+    setActiveTab('test')
     fetch(`data/${ontologyId}.json`)
       .then(r => r.ok ? r.json() : null)
       .then((d) => {
@@ -164,67 +169,98 @@ export default function App() {
             setState={setOntology}
             selectedName={selectedName}
             onSelect={setSelectedName}
+            detailMode={activeTab === 'entity' ? 'hidden' : 'shown'}
           />
         </aside>
 
         <section style={center}>
-          <div style={{ marginBottom: 8 }}>
-            <label style={{ fontSize: 11, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              Sample sentences
-            </label>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '6px 0 12px' }}>
-              {samples.map((s, i) => (
-                <li key={i}>
-                  <button onClick={() => { setText(s); setResult(null) }} style={sampleBtn}>{s}</button>
-                </li>
-              ))}
-            </ul>
+          <div style={tabStrip} role="tablist">
+            <button
+              role="tab"
+              aria-selected={activeTab === 'test'}
+              onClick={() => setActiveTab('test')}
+              style={tabBtn(activeTab === 'test')}
+            >NLP Testing</button>
+            <button
+              role="tab"
+              aria-selected={activeTab === 'entity'}
+              onClick={() => setActiveTab('entity')}
+              style={tabBtn(activeTab === 'entity')}
+            >Entity {selectedName ? `· ${ontology.entities[selectedName]?.label || selectedName}` : ''}</button>
           </div>
 
-          <textarea
-            value={text}
-            onChange={e => setText(e.target.value.slice(0, MAX_INPUT_LEN))}
-            placeholder="Paste a sentence about your domain..."
-            style={textarea}
-          />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px 0 4px' }}>
-            <span style={{ fontSize: 11, color: remaining < 100 ? '#dc2626' : '#94a3b8' }}>
-              {text.length} / {MAX_INPUT_LEN}
-            </span>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              {isEdited && !loading && (
-                <span style={{ fontSize: 11, color: '#94a3b8' }} title="The next extraction will compile your edited ontology server-side">
-                  using edited ontology
+          {activeTab === 'test' && (
+            <div style={tabPanel}>
+              <div style={{ marginBottom: 8 }}>
+                <label style={{ fontSize: 11, color: '#64748b', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                  NLP Testing
+                </label>
+                <ul style={{ listStyle: 'none', padding: 0, margin: '6px 0 12px' }}>
+                  {samples.map((s, i) => (
+                    <li key={i}>
+                      <button onClick={() => { setText(s); setResult(null) }} style={sampleBtn}>{s}</button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <textarea
+                value={text}
+                onChange={e => setText(e.target.value.slice(0, MAX_INPUT_LEN))}
+                placeholder="Paste a sentence about your domain..."
+                style={textarea}
+              />
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px 0 4px' }}>
+                <span style={{ fontSize: 11, color: remaining < 100 ? '#dc2626' : '#94a3b8' }}>
+                  {text.length} / {MAX_INPUT_LEN}
                 </span>
-              )}
-              <button onClick={runExtraction} disabled={loading} style={primaryBtn(loading)}>
-                {loading ? (
-                  <>
-                    <span className="mutato-spinner" aria-hidden="true" />
-                    <span>Extracting…</span>
-                  </>
-                ) : (
-                  'Extract entities'
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  {isEdited && !loading && (
+                    <span style={{ fontSize: 11, color: '#94a3b8' }} title="The next extraction will compile your edited ontology server-side">
+                      using edited ontology
+                    </span>
+                  )}
+                  <button onClick={runExtraction} disabled={loading} style={primaryBtn(loading)}>
+                    {loading ? (
+                      <>
+                        <span className="mutato-spinner" aria-hidden="true" />
+                        <span>Extracting…</span>
+                      </>
+                    ) : (
+                      'Extract entities'
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <div style={{ minHeight: 16, marginBottom: 8, textAlign: 'right' }}>
+                {loading && showSlowHint && (
+                  <span style={{ fontSize: 11, color: '#94a3b8', fontStyle: 'italic' }}>
+                    {isEdited
+                      ? 'compiling new ontology, then extracting (cold runs take a few seconds)…'
+                      : 'extracting…'}
+                  </span>
                 )}
-              </button>
+              </div>
+
+              {error && <div style={errorBox}>{error}</div>}
+              {result && <HighlightedText original={extractedText} tokens={result.tokens} canonToLabel={canonToLabel} />}
+              {result && (
+                <div style={{ fontSize: 12, color: '#64748b', marginTop: 8 }}>
+                  {result.stats.match_count} entities found across {result.stats.token_count} tokens.
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
-          <div style={{ minHeight: 16, marginBottom: 8, textAlign: 'right' }}>
-            {loading && showSlowHint && (
-              <span style={{ fontSize: 11, color: '#94a3b8', fontStyle: 'italic' }}>
-                {isEdited
-                  ? 'compiling new ontology, then extracting (cold runs take a few seconds)…'
-                  : 'extracting…'}
-              </span>
-            )}
-          </div>
-
-          {error && <div style={errorBox}>{error}</div>}
-          {result && <HighlightedText original={extractedText} tokens={result.tokens} canonToLabel={canonToLabel} />}
-          {result && (
-            <div style={{ fontSize: 12, color: '#64748b', marginTop: 8 }}>
-              {result.stats.match_count} entities found across {result.stats.token_count} tokens.
+          {activeTab === 'entity' && (
+            <div style={tabPanel}>
+              <EntityEditor
+                state={ontology}
+                setState={setOntology}
+                selectedName={selectedName}
+                onSelect={setSelectedName}
+              />
             </div>
           )}
         </section>
@@ -332,8 +368,31 @@ const leftRail = {
   maxHeight: 'calc(100vh - 130px)', minHeight: 400,
 }
 const center = {
-  background: '#fff', border: '1px solid #e2e8f0', borderRadius: 6, padding: 16,
+  background: '#fff', border: '1px solid #e2e8f0', borderRadius: 6,
   display: 'flex', flexDirection: 'column', minHeight: 0,
+  overflow: 'hidden',
+}
+const tabStrip = {
+  display: 'flex', gap: 0, flexShrink: 0,
+  borderBottom: '1px solid #e2e8f0',
+  background: '#f8fafc',
+  paddingLeft: 8, paddingRight: 8, paddingTop: 8,
+}
+const tabBtn = (active) => ({
+  background: active ? '#fff' : 'transparent',
+  color: active ? '#0f172a' : '#64748b',
+  border: '1px solid #e2e8f0',
+  borderBottom: active ? '1px solid #fff' : '1px solid #e2e8f0',
+  borderTopLeftRadius: 4, borderTopRightRadius: 4,
+  borderBottomLeftRadius: 0, borderBottomRightRadius: 0,
+  padding: '6px 14px', marginBottom: -1,
+  fontSize: 12, fontWeight: active ? 600 : 500,
+  cursor: 'pointer',
+  marginRight: 2,
+})
+const tabPanel = {
+  flex: 1, display: 'flex', flexDirection: 'column',
+  padding: 16, minHeight: 0,
 }
 const rightRail = {
   background: '#fff', border: '1px solid #e2e8f0', borderRadius: 6, padding: 12,

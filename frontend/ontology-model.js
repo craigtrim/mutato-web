@@ -48,12 +48,19 @@ export function mdaToEntities(mda) {
   const rdfType = byPred['rdf:type'] || {}
   const altLabel = byPred['skos:altLabel'] || {}
   const inflection = byPred[':inflection'] || {}
+  // Semantic enrichments. Most baked ontologies won't have these; default
+  // to absent. The mutato compiler retains them in by_predicate when the
+  // source TTL declares them, so loading a user-saved TTL round-trips.
+  const comment = byPred['rdfs:comment'] || {}
+  const equivalentClass = byPred['owl:equivalentClass'] || {}
+  const disjointWith = byPred['owl:disjointWith'] || {}
 
   // Index labels by lowercased name so we can recover original case.
   const properCase = {}
   for (const k of Object.keys(mda.labels)) {
     properCase[k.toLowerCase()] = k
   }
+  const restoreNames = (arr) => (arr || []).map(v => properCase[v] || v)
 
   const out = {}
 
@@ -68,6 +75,9 @@ export function mdaToEntities(mda) {
       parent: subClassOf[lk] && subClassOf[lk][0] ? properCase[subClassOf[lk][0]] || subClassOf[lk][0] : null,
       altLabels: (altLabel[lk] || []).slice(),
       inflections: (inflection[lk] || []).slice(),
+      comment: (comment[lk] || [])[0] || '',
+      equivalentClasses: restoreNames(equivalentClass[lk]),
+      disjointWith: restoreNames(disjointWith[lk]),
     }
   }
   for (const lk of Object.keys(rdfType)) {
@@ -82,6 +92,9 @@ export function mdaToEntities(mda) {
         parent: null,
         altLabels: (altLabel[lk] || []).slice(),
         inflections: (inflection[lk] || []).slice(),
+        comment: (comment[lk] || [])[0] || '',
+        equivalentClasses: restoreNames(equivalentClass[lk]),
+        disjointWith: restoreNames(disjointWith[lk]),
       }
     }
   }
@@ -100,6 +113,7 @@ export function mdaToEntities(mda) {
       label: mda.labels[name] || name,
       parent: properCase[parentLower] || parentLower,
       altLabels: (altLabel[lk] || []).slice(),
+      comment: (comment[lk] || [])[0] || '',
     }
   }
 
@@ -152,6 +166,9 @@ export function entitiesToTtl(entities, namespace = DEFAULT_NAMESPACE) {
     parts.push(`rdfs:label ${ttlString(e.label || e.name)}`)
     for (const a of e.altLabels || []) parts.push(`skos:altLabel ${ttlString(a)}`)
     for (const f of e.inflections || []) parts.push(`:inflection ${ttlString(f)}`)
+    for (const t of e.equivalentClasses || []) parts.push(`owl:equivalentClass :${ttlIdent(t)}`)
+    for (const t of e.disjointWith || []) parts.push(`owl:disjointWith :${ttlIdent(t)}`)
+    if (e.comment && e.comment.trim()) parts.push(`rdfs:comment ${ttlString(e.comment.trim())}`)
     lines.push(parts.join(' ;\n    ') + ' .')
     lines.push('')
   }
@@ -161,11 +178,171 @@ export function entitiesToTtl(entities, namespace = DEFAULT_NAMESPACE) {
     const parts = [`:${ttlIdent(e.name)} a ${parent}`]
     parts.push(`rdfs:label ${ttlString(e.label || e.name)}`)
     for (const a of e.altLabels || []) parts.push(`skos:altLabel ${ttlString(a)}`)
+    if (e.comment && e.comment.trim()) parts.push(`rdfs:comment ${ttlString(e.comment.trim())}`)
     lines.push(parts.join(' ;\n    ') + ' .')
     lines.push('')
   }
 
   return lines.join('\n')
+}
+
+// Serialize a single entity to a TTL fragment (no prefix or ontology
+// header). Mirrors the per-entity emission in `entitiesToTtl` so that
+// round-tripping a fragment through `parseEntityTtlFragment` and back
+// produces the same text.
+export function entityToTtlFragment(entity) {
+  if (!entity) return ''
+  const parts = []
+  if (entity.kind === 'class') {
+    parts.push(`:${ttlIdent(entity.name)} a owl:Class`)
+    if (entity.parent) parts.push(`rdfs:subClassOf :${ttlIdent(entity.parent)}`)
+  } else {
+    const parent = entity.parent ? `:${ttlIdent(entity.parent)}` : 'owl:NamedIndividual'
+    parts.push(`:${ttlIdent(entity.name)} a ${parent}`)
+  }
+  parts.push(`rdfs:label ${ttlString(entity.label || entity.name)}`)
+  for (const a of entity.altLabels || []) parts.push(`skos:altLabel ${ttlString(a)}`)
+  if (entity.kind === 'class') {
+    for (const f of entity.inflections || []) parts.push(`:inflection ${ttlString(f)}`)
+    for (const t of entity.equivalentClasses || []) parts.push(`owl:equivalentClass :${ttlIdent(t)}`)
+    for (const t of entity.disjointWith || []) parts.push(`owl:disjointWith :${ttlIdent(t)}`)
+  }
+  if (entity.comment && entity.comment.trim()) {
+    parts.push(`rdfs:comment ${ttlString(entity.comment.trim())}`)
+  }
+  return parts.join(' ;\n    ') + ' .'
+}
+
+// Parse a per-entity TTL fragment back into an Entity object. Constrained
+// to the predicates we emit ourselves — this is not a general Turtle
+// parser. Returns `{ entity }` on success, `{ error: string }` on failure.
+//
+// The fragment is expected to look like the output of
+// `entityToTtlFragment`: subject + predicate-object pairs separated by
+// `;`, terminated by `.`. Comments (`#...`) and whitespace are tolerated.
+// The identifier in the TTL must match `originalName` — we don't allow
+// renaming an entity via this surface (that would orphan child references
+// and break the React key contract).
+export function parseEntityTtlFragment(ttl, originalName) {
+  if (typeof ttl !== 'string') return { error: 'TTL must be a string.' }
+  const clean = ttl.replace(/#.*$/gm, '').trim()
+  if (!clean) return { error: 'TTL is empty.' }
+
+  // Extract the leading subject: `:Name` followed by whitespace.
+  const subjectMatch = /^:([A-Za-z_][A-Za-z0-9_]*)\s+/.exec(clean)
+  if (!subjectMatch) {
+    return { error: 'Expected a subject like `:Name` at the start of the fragment.' }
+  }
+  const name = subjectMatch[1]
+  if (originalName && name !== originalName) {
+    return { error: `Identifier mismatch: TTL says :${name} but this entity is :${originalName}. Renaming an entity from the TTL view isn't supported here.` }
+  }
+  const rest = clean.slice(subjectMatch[0].length)
+
+  // Split rest into clauses on `;` and `.` while respecting quoted
+  // strings. We deliberately don't use a single regex — the escape rules
+  // are easier to get right with a char loop.
+  const clauses = []
+  let buf = ''
+  let inString = false
+  let escape = false
+  let sawTerminator = false
+  for (let i = 0; i < rest.length; i++) {
+    const ch = rest[i]
+    if (escape) { buf += ch; escape = false; continue }
+    if (inString) {
+      if (ch === '\\') { buf += ch; escape = true; continue }
+      if (ch === '"') { buf += ch; inString = false; continue }
+      buf += ch
+      continue
+    }
+    if (ch === '"') { buf += ch; inString = true; continue }
+    if (ch === ';') {
+      if (buf.trim()) clauses.push(buf.trim())
+      buf = ''
+      continue
+    }
+    if (ch === '.') {
+      if (buf.trim()) clauses.push(buf.trim())
+      buf = ''
+      sawTerminator = true
+      break
+    }
+    buf += ch
+  }
+  if (inString) return { error: 'Unterminated quoted string.' }
+  if (!sawTerminator) return { error: 'Missing terminating `.`' }
+
+  const next = {
+    name,
+    kind: 'instance',
+    label: '',
+    parent: null,
+    altLabels: [],
+    inflections: [],
+    equivalentClasses: [],
+    disjointWith: [],
+    comment: '',
+  }
+  let hadType = false
+
+  for (const c of clauses) {
+    const m = /^(\S+)\s+([\s\S]+)$/.exec(c)
+    if (!m) return { error: `Could not split clause into predicate + object: "${c}"` }
+    const pred = m[1]
+    const obj = m[2].trim()
+
+    if (pred === 'a' || pred === 'rdf:type') {
+      hadType = true
+      if (obj === 'owl:Class') next.kind = 'class'
+      else if (obj === 'owl:NamedIndividual') next.kind = 'instance'
+      else if (obj.startsWith(':')) {
+        next.kind = 'instance'
+        next.parent = obj.slice(1).trim()
+      } else {
+        return { error: `Unsupported type object: ${obj}` }
+      }
+    } else if (pred === 'rdfs:subClassOf') {
+      if (!obj.startsWith(':')) return { error: `subClassOf must be a prefixed name: ${obj}` }
+      next.parent = obj.slice(1).trim()
+    } else if (pred === 'rdfs:label') {
+      next.label = unquoteTtlString(obj)
+    } else if (pred === 'skos:altLabel') {
+      next.altLabels.push(unquoteTtlString(obj))
+    } else if (pred === ':inflection') {
+      next.inflections.push(unquoteTtlString(obj))
+    } else if (pred === 'owl:equivalentClass') {
+      if (!obj.startsWith(':')) return { error: `owl:equivalentClass must be a prefixed name: ${obj}` }
+      next.equivalentClasses.push(obj.slice(1).trim())
+    } else if (pred === 'owl:disjointWith') {
+      if (!obj.startsWith(':')) return { error: `owl:disjointWith must be a prefixed name: ${obj}` }
+      next.disjointWith.push(obj.slice(1).trim())
+    } else if (pred === 'rdfs:comment') {
+      next.comment = unquoteTtlString(obj)
+    }
+    // Unknown predicates are silently dropped — keeps the surface forgiving
+    // when users paste in TTL that has annotations we don't model.
+  }
+
+  if (!hadType) return { error: 'Missing `a <type>` clause.' }
+  if (!next.label) next.label = name
+
+  // Drop class-only fields when the entity is an instance, to keep the
+  // resulting object minimal.
+  if (next.kind === 'instance') {
+    delete next.inflections
+    delete next.equivalentClasses
+    delete next.disjointWith
+  }
+  return { entity: next }
+}
+
+function unquoteTtlString(raw) {
+  const s = raw.trim()
+  if (s.startsWith('"') && s.endsWith('"') && s.length >= 2) {
+    return s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\')
+  }
+  return s
 }
 
 // Mutato/Turtle identifiers must match [A-Za-z_][A-Za-z0-9_]*. Replace
@@ -240,6 +417,48 @@ export function removeInflection(state, name, value) {
   const e = state.entities[name]
   if (!e) return state
   return updateEntity(state, name, { inflections: (e.inflections || []).filter(f => f !== value) })
+}
+
+export function setComment(state, name, value) {
+  const e = state.entities[name]
+  if (!e) return state
+  const v = String(value || '')
+  return updateEntity(state, name, { comment: v })
+}
+
+// Shared add/remove for class-target chip lists (equivalentClasses,
+// disjointWith). Validates that the target exists, is a class, and is
+// not the entity itself. Case-insensitive de-dup on add.
+function addClassRef(state, name, target, field) {
+  const t = String(target || '').trim()
+  if (!t || t === name) return state
+  const e = state.entities[name]
+  const tgt = state.entities[t]
+  if (!e || e.kind !== 'class' || !tgt || tgt.kind !== 'class') return state
+  const current = e[field] || []
+  if (current.some(x => x.toLowerCase() === t.toLowerCase())) return state
+  return updateEntity(state, name, { [field]: [...current, t] })
+}
+
+function removeClassRef(state, name, target, field) {
+  const e = state.entities[name]
+  if (!e) return state
+  return updateEntity(state, name, {
+    [field]: (e[field] || []).filter(x => x !== target),
+  })
+}
+
+export function addEquivalentClass(state, name, target) {
+  return addClassRef(state, name, target, 'equivalentClasses')
+}
+export function removeEquivalentClass(state, name, target) {
+  return removeClassRef(state, name, target, 'equivalentClasses')
+}
+export function addDisjointWith(state, name, target) {
+  return addClassRef(state, name, target, 'disjointWith')
+}
+export function removeDisjointWith(state, name, target) {
+  return removeClassRef(state, name, target, 'disjointWith')
 }
 
 // ---------------- derived views ----------------
