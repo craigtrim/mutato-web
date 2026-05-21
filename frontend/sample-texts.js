@@ -10,12 +10,18 @@ export const SAMPLES = {
     'Aragorn, Legolas, and Gimli rode for Rohan to find the lost hobbits.',
     'The Precious slipped from Smeagol\'s pocket as he fled the orcs.',
   ],
-  'animals-test': [
-    'I saw a dog and a cat near the bee hive.',
-    'The labradors chased the german shepherd across the field.',
+  oilgas: [
+    'The drilling crew replaced the worn PDC bit before resuming operations in the Permian Basin.',
+    'A blowout preventer failure at the wellhead forced the crew to evacuate the offshore platform.',
+    'Operators flared excess natural gas while the compressor station underwent emergency maintenance.',
+    'The refinery processed sour crude from Bonny Light into diesel, gasoline, and naphtha.',
+    'A mud logger flagged H2S exposure as the lateral well approached the target reservoir.',
   ],
-  'music-test': [
-    'She picked up her axe and started a jazz solo.',
-    'The electric guitar dominated the bridge of the song.',
+  healthcare: [
+    'The patient presented with chest pain and shortness of breath; we ordered an EKG and chest X-ray.',
+    'After the laceration was sutured, the nurse administered a tetanus booster and Tylenol.',
+    'A positive rapid strep test prompted us to prescribe amoxicillin and discharge with work excuse.',
+    'The triage nurse documented elevated blood pressure and treated the migraine with ibuprofen.',
+    'An asthma exacerbation responded well to albuterol nebulization and prednisone.',
   ],
 }

@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react'
+import React, { useMemo, useState, useRef, useEffect, useLayoutEffect } from 'react'
 import {
   MAX_ENTITIES,
   addEntity, removeEntity, updateEntity,
@@ -12,6 +12,33 @@ import {
 const KIND_BADGE = {
   class:    { bg: '#dbeafe', fg: '#1e40af', letter: 'C' },
   instance: { bg: '#f3e8ff', fg: '#6b21a8', letter: 'i' },
+}
+
+// Fixed row height used by the virtualizer. Picked to match the inline
+// row padding of the tree node (4px top + 4px bottom + 16px content).
+// If you change row visuals, keep this in sync or the indicator math
+// drifts and rows clip mid-text.
+const TREE_ROW_HEIGHT = 26
+// Render this many extra rows above and below the visible viewport so
+// fast scrolls don't tear. 8 rows × 26px = ~200px of margin in each
+// direction, which absorbs single wheel ticks at typical OS settings.
+const TREE_ROW_OVERSCAN = 8
+
+// A node is open by default if its depth is below this threshold. Mirrors
+// the old recursive TreeNode behavior (`depth < 1`) so top-level classes
+// expand on load and everything below starts collapsed.
+function defaultOpenAtDepth(depth) {
+  return depth < 1
+}
+
+// XOR a default with the user's toggled set. The toggled set lives in
+// the editor; a name appearing in it means "the user clicked this node,
+// flipping it from its default state." This is the same per-row logic
+// the original recursive tree used, just hoisted up so the virtualizer
+// can compute the flat visible row list in one pass.
+function isOpenForRow(name, depth, toggledSet) {
+  const dflt = defaultOpenAtDepth(depth)
+  return toggledSet.has(name) ? !dflt : dflt
 }
 
 const DETAIL_HEIGHT_KEY = 'mutato-editor-detail-height'
@@ -105,6 +132,19 @@ export default function OntologyEditor({
   const entityCount = Object.keys(state.entities).length
   const atLimit = entityCount >= MAX_ENTITIES
 
+  // Names the user has explicitly toggled away from the depth-default. A
+  // depth-0 node listed here is closed; any other depth listed here is
+  // open. The virtualizer reads this to decide which children to flatten.
+  const [toggledSet, setToggledSet] = useState(() => new Set())
+  const toggleOpen = (name) => {
+    setToggledSet(prev => {
+      const next = new Set(prev)
+      if (next.has(name)) next.delete(name)
+      else next.add(name)
+      return next
+    })
+  }
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     if (!q) return null
@@ -127,6 +167,29 @@ export default function OntologyEditor({
     }
     return withAncestors
   }, [query, state.entities])
+
+  // Flatten the visible tree into a single array of rows for the
+  // virtualizer. Walks the child index in display order, descending into
+  // children only when the node is effectively open. Search mode replaces
+  // open-state with "open if ancestor of a match" so search hits are
+  // always reachable without manual expansion.
+  const flatRows = useMemo(() => {
+    const rows = []
+    const walk = (name, depth) => {
+      if (filtered && !filtered.has(name)) return
+      const entity = state.entities[name]
+      if (!entity) return
+      const kids = childIndex[name] || []
+      const hasKids = kids.length > 0
+      const open = filtered ? true : isOpenForRow(name, depth, toggledSet)
+      rows.push({ name, depth, hasKids, open })
+      if (open && hasKids) {
+        for (const k of kids) walk(k, depth + 1)
+      }
+    }
+    for (const r of (childIndex.__roots || [])) walk(r, 0)
+    return rows
+  }, [childIndex, state.entities, toggledSet, filtered])
 
   const promptAndAdd = (kind, parent) => {
     if (atLimit) return
@@ -443,45 +506,44 @@ export default function OntologyEditor({
         </div>
       </div>
 
-      <div
+      <VirtualizedTree
         ref={treeAreaRef}
-        style={treeArea}
-        onDragOver={handleDragOverRoot}
-        onDrop={handleDropOnRoot}
-      >
-        {childIndex.__roots.length === 0 && (
-          <p style={muted}>Empty ontology. Click <em>+ class</em> to start.</p>
-        )}
-        {childIndex.__roots.map(name => (
-          <TreeNode
-            key={name}
-            name={name}
-            depth={0}
+        rows={flatRows}
+        rowHeight={TREE_ROW_HEIGHT}
+        overscan={TREE_ROW_OVERSCAN}
+        emptyMessage={childIndex.__roots.length === 0
+          ? <p style={muted}>Empty ontology. Click <em>+ class</em> to start.</p>
+          : null}
+        rootDropOverlay={drag && drag.target === null
+          ? (
+            <div style={rootDropZone}>
+              drop here to make top-level
+              {state.entities[drag.source]?.kind === 'instance' && firstTopLevelClass(state.entities) && (
+                <span style={rootDropHint}>
+                  {' '}(instance will be retyped to <code>{firstTopLevelClass(state.entities)}</code>)
+                </span>
+              )}
+            </div>
+          )
+          : null}
+        onDragOverRoot={handleDragOverRoot}
+        onDropOnRoot={handleDropOnRoot}
+        renderRow={(row) => (
+          <TreeRow
+            row={row}
             state={state}
-            childIndex={childIndex}
-            filtered={filtered}
             selectedName={selectedName}
             onSelect={onSelect}
             onContextMenu={openContextMenu}
+            onToggleOpen={toggleOpen}
             drag={drag}
             onDragStart={handleDragStart}
             onDragOverRow={handleDragOverRow}
             onDropRow={handleDropOnRow}
             onDragEnd={handleDragEnd}
-            defaultOpen={true}
           />
-        ))}
-        {drag && drag.target === null && (
-          <div style={rootDropZone}>
-            drop here to make top-level
-            {state.entities[drag.source]?.kind === 'instance' && firstTopLevelClass(state.entities) && (
-              <span style={rootDropHint}>
-                {' '}(instance will be retyped to <code>{firstTopLevelClass(state.entities)}</code>)
-              </span>
-            )}
-          </div>
         )}
-      </div>
+      />
 
       <div
         style={resizeHandleStyle(isResizing)}
@@ -531,22 +593,99 @@ export default function OntologyEditor({
   )
 }
 
-function TreeNode({
-  name, depth, state, childIndex, filtered,
-  selectedName, onSelect, onContextMenu,
-  drag, onDragStart, onDragOverRow, onDropRow, onDragEnd,
-  defaultOpen,
-}) {
-  const entity = state.entities[name]
-  if (!entity) return null
-  if (filtered && !filtered.has(name)) return null
+// Fixed-height row virtualizer. Keeps the scrollable container shape
+// identical to the old non-virtualized tree (overflowY: auto, full
+// flex height) so the drag auto-scroll logic that reads
+// `treeAreaRef.current` continues to work without modification.
+//
+// Renders a tall spacer div sized to `rows.length * rowHeight` and
+// absolutely positions only the slice currently in view (plus an
+// overscan margin above and below). At 8192 rows this caps the React
+// reconciliation per scroll tick to ~25-30 elements regardless of the
+// total list size.
+const VirtualizedTree = React.forwardRef(function VirtualizedTree({
+  rows, rowHeight, overscan,
+  emptyMessage, rootDropOverlay,
+  onDragOverRoot, onDropOnRoot,
+  renderRow,
+}, ref) {
+  const [scrollTop, setScrollTop] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(400)
+  const innerRef = useRef(null)
 
-  const kids = childIndex[name] || []
-  const [open, setOpen] = useState(defaultOpen || depth < 1)
+  // Expose the scroll container to the parent so the drag auto-scroll
+  // effect (which lives on the parent) can call scrollBy on it.
+  useEffect(() => {
+    if (typeof ref === 'function') ref(innerRef.current)
+    else if (ref) ref.current = innerRef.current
+  }, [ref])
+
+  useLayoutEffect(() => {
+    const el = innerRef.current
+    if (!el) return
+    setViewportHeight(el.clientHeight)
+    const onScroll = () => setScrollTop(el.scrollTop)
+    const ro = new ResizeObserver(() => setViewportHeight(el.clientHeight))
+    ro.observe(el)
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      ro.disconnect()
+      el.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
+  const totalHeight = rows.length * rowHeight
+  const startIdx = Math.max(0, Math.floor(scrollTop / rowHeight) - overscan)
+  const endIdx = Math.min(
+    rows.length,
+    Math.ceil((scrollTop + viewportHeight) / rowHeight) + overscan,
+  )
+  const visible = rows.slice(startIdx, endIdx)
+
+  return (
+    <div
+      ref={innerRef}
+      style={treeArea}
+      onDragOver={onDragOverRoot}
+      onDrop={onDropOnRoot}
+    >
+      {rows.length === 0 && emptyMessage}
+      <div style={{ position: 'relative', height: totalHeight, minHeight: 1 }}>
+        {visible.map((row, i) => (
+          <div
+            key={row.name}
+            style={{
+              position: 'absolute',
+              top: (startIdx + i) * rowHeight,
+              left: 0,
+              right: 0,
+              height: rowHeight,
+            }}
+          >
+            {renderRow(row)}
+          </div>
+        ))}
+      </div>
+      {rootDropOverlay}
+    </div>
+  )
+})
+
+// A single row in the virtualized tree. Indent is rendered as
+// `paddingLeft` instead of a wrapping `marginLeft` so absolute
+// positioning by the virtualizer stays predictable.
+function TreeRow({
+  row, state, selectedName,
+  onSelect, onContextMenu, onToggleOpen,
+  drag, onDragStart, onDragOverRow, onDropRow, onDragEnd,
+}) {
+  const { name, depth, hasKids, open } = row
+  const entity = state.entities[name]
   const [hovered, setHovered] = useState(false)
+  if (!entity) return null
+
   const isSelected = selectedName === name
   const badge = KIND_BADGE[entity.kind] || KIND_BADGE.class
-  const hasKids = kids.length > 0
   const isDragSource = drag?.source === name
   const isDropTargetRow = drag?.target === name
   const dropPosition = isDropTargetRow ? drag.position : null
@@ -559,9 +698,12 @@ function TreeNode({
   else if (isSelected) rowBg = '#e0f2fe'
   else if (hovered) rowBg = '#f8fafc'
 
+  // Depth indent: 14px per level matches the old marginLeft cascade.
+  const indentPx = depth * 14
+
   return (
-    <div style={{ marginLeft: depth === 0 ? 0 : 14 }}>
-      {isDropAbove && <div style={siblingDropLine} />}
+    <div style={{ position: 'relative', height: '100%' }}>
+      {isDropAbove && <div style={{ ...siblingDropLine, position: 'absolute', top: 0, left: indentPx + 4, right: 4 }} />}
       <div
         draggable
         onDragStart={(e) => onDragStart(e, name)}
@@ -570,20 +712,24 @@ function TreeNode({
         onDragEnd={onDragEnd}
         style={{
           display: 'flex', alignItems: 'center', gap: 6,
-          padding: '4px 6px', borderRadius: 4,
+          padding: '4px 6px', paddingLeft: 6 + indentPx,
+          borderRadius: 4,
           background: rowBg,
           cursor: drag ? 'grabbing' : 'pointer',
           position: 'relative',
           opacity: isDragSource ? 0.4 : 1,
           outline: isDropOn ? '1px solid #3b82f6' : 'none',
           transition: 'background 0.08s, opacity 0.08s, outline 0.08s',
+          height: '100%',
+          boxSizing: 'border-box',
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onContextMenu={(e) => onContextMenu(e, name)}
+        onDoubleClick={() => hasKids && onToggleOpen(name)}
       >
         <span
-          onClick={() => hasKids && setOpen(!open)}
+          onClick={() => hasKids && onToggleOpen(name)}
           style={{ width: 12, fontSize: 11, color: '#64748b', userSelect: 'none' }}
         >
           {hasKids ? (open ? '▾' : '▸') : ''}
@@ -617,29 +763,7 @@ function TreeNode({
           }}
         >⋮</button>
       </div>
-      {isDropBelow && <div style={siblingDropLine} />}
-      {open && hasKids && (
-        <div>
-          {kids.map(child => (
-            <TreeNode
-              key={child}
-              name={child}
-              depth={depth + 1}
-              state={state}
-              childIndex={childIndex}
-              filtered={filtered}
-              selectedName={selectedName}
-              onSelect={onSelect}
-              onContextMenu={onContextMenu}
-              drag={drag}
-              onDragStart={onDragStart}
-              onDragOverRow={onDragOverRow}
-              onDropRow={onDropRow}
-              onDragEnd={onDragEnd}
-            />
-          ))}
-        </div>
-      )}
+      {isDropBelow && <div style={{ ...siblingDropLine, position: 'absolute', bottom: 0, left: indentPx + 4, right: 4 }} />}
     </div>
   )
 }

@@ -22,11 +22,23 @@
 // All edits return a new state (immutable). All functions in this module are
 // pure.
 
-export const MAX_ENTITIES = 1000
+export const MAX_ENTITIES = 10000
 export const DEFAULT_NAMESPACE = 'https://craigtrim.com/ontologies/custom#'
 
-// Names that the MDA dict uses internally and should not surface as entities.
-const SUPPRESSED = new Set(['lotrmutatoontology', 'class', 'ontology'])
+// Subject names that the MDA dict uses internally and should not surface as
+// editable entities. 'class' and 'ontology' are predicate-value names that
+// re-appear as subjects of `rdf:type` in the compiled dict.
+const SUPPRESSED_SUBJECTS = new Set(['class', 'ontology'])
+
+// The ontology declaration (e.g. `:LotrMutatoOntology a owl:Ontology`) lands
+// in the MDA dict with a label and `rdf:type ontology`. Filter any subject
+// whose rdf:type set names it as an ontology, regardless of the name. This
+// avoids hard-coding "lotrmutatoontology" / "oilgasmutatoontology" / etc.
+function isOntologyMeta(lk, rdfType) {
+  if (SUPPRESSED_SUBJECTS.has(lk)) return true
+  const types = rdfType[lk] || []
+  return types.includes('ontology')
+}
 
 // Build the source-shape entity dict from a compiled mutato MDA dict.
 export function mdaToEntities(mda) {
@@ -47,7 +59,7 @@ export function mdaToEntities(mda) {
 
   // Pass 1: classes (anything with rdfs:subClassOf, OR with rdf:type == "class").
   for (const lk of Object.keys(subClassOf)) {
-    if (SUPPRESSED.has(lk)) continue
+    if (isOntologyMeta(lk, rdfType)) continue
     const name = properCase[lk] || lk
     out[name] = {
       name,
@@ -59,7 +71,7 @@ export function mdaToEntities(mda) {
     }
   }
   for (const lk of Object.keys(rdfType)) {
-    if (SUPPRESSED.has(lk)) continue
+    if (isOntologyMeta(lk, rdfType)) continue
     const t = rdfType[lk] || []
     if (t.includes('class') && !out[properCase[lk] || lk]) {
       const name = properCase[lk] || lk
@@ -76,9 +88,9 @@ export function mdaToEntities(mda) {
 
   // Pass 2: instances (rdf:type to something not in {'class','ontology'}).
   for (const lk of Object.keys(rdfType)) {
-    if (SUPPRESSED.has(lk)) continue
+    if (isOntologyMeta(lk, rdfType)) continue
     const t = rdfType[lk] || []
-    const parentLower = t.find(v => !SUPPRESSED.has(v))
+    const parentLower = t.find(v => !SUPPRESSED_SUBJECTS.has(v))
     if (!parentLower) continue
     const name = properCase[lk] || lk
     if (out[name]) continue  // already a class
