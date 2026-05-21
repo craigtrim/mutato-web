@@ -11,7 +11,7 @@
 //   Hierarchy  — parent (read-only; reparent via drag in tree)
 //   Semantics  — equivalentClass, disjointWith (classes only)
 //   Notes      — rdfs:comment
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import { ChipEditor } from './ontology-editor.jsx'
 import {
   updateEntity,
@@ -35,6 +35,19 @@ export default function EntityEditor({ state, setState, selectedName, onSelect }
   // the small header above the cards.
   const [viewMode, setViewMode] = useState('form')
 
+  // All hooks must run unconditionally before any early return so the
+  // hook count stays stable across the "no selection" -> "selected"
+  // transition. Memoize the class-name picker source here even when
+  // `entity` is null — the memo is cheap and the alternative (hoisting
+  // the early return below all hooks) bloats the body of this function.
+  const classNames = useMemo(() => {
+    if (!entity) return []
+    return Object.values(state.entities)
+      .filter(e => e.kind === 'class' && e.name !== entity.name)
+      .map(e => e.name)
+      .sort()
+  }, [state.entities, entity?.name, entity])
+
   if (!entity) {
     return (
       <div style={emptyState}>
@@ -45,16 +58,6 @@ export default function EntityEditor({ state, setState, selectedName, onSelect }
       </div>
     )
   }
-
-  // Sorted snapshot of every other class name, used as the datalist source
-  // for the equivalent-class and disjoint-with pickers. Recomputed on every
-  // state edit; size is small (≤ entity count) so the work is trivial.
-  const classNames = useMemo(() => (
-    Object.values(state.entities)
-      .filter(e => e.kind === 'class' && e.name !== entity.name)
-      .map(e => e.name)
-      .sort()
-  ), [state.entities, entity.name])
 
   const badge = KIND_BADGE[entity.kind] || KIND_BADGE.class
   const parent = entity.parent ? state.entities[entity.parent] : null
@@ -202,32 +205,74 @@ export default function EntityEditor({ state, setState, selectedName, onSelect }
 }
 
 // Parser-backed editable view of a single entity's Turtle fragment.
-// On Save, we parse the textarea and apply the diff to ontology state
-// via the `onSave` callback. Parse failures surface inline; nothing is
-// mutated until the user clicks Save and the parse succeeds.
+//
+// Autosave model (informed by Google Docs / Notion / CodeMirror conventions):
+//   - Debounce 1000ms after the last keystroke — the conventional sweet
+//     spot. Tight enough to feel live; loose enough not to thrash on
+//     every character.
+//   - Force-flush on blur. Users who tab away or click outside expect
+//     their edit to be captured immediately rather than waiting out the
+//     debounce window.
+//   - Force-flush on unmount. Switching the selected entity (or toggling
+//     back to the Form view, or closing the tab) tears this component
+//     down — we run one final parse attempt during cleanup so nothing is
+//     lost.
+//   - Silent validation. While the parse fails, we keep the last good
+//     state in app memory and surface a small "invalid" tag in the
+//     status row. No buttons, no modals — the user keeps typing and the
+//     status returns to "saved" the moment the syntax is valid again.
+//
+// Status states: 'saved' (clean), 'pending' (debounce in flight),
+// 'invalid' (parse failure on the current draft).
 function EntityTtlView({ entity, onSave }) {
   const initial = useMemo(() => entityToTtlFragment(entity), [entity])
   const [draft, setDraft] = useState(initial)
-  const [error, setError] = useState(null)
-  const [dirty, setDirty] = useState(false)
+  const [status, setStatus] = useState('saved')
+  const [errorMsg, setErrorMsg] = useState(null)
+  // useRef holds the timeout id so the cleanup effect can clear it
+  // without re-running the effect on every keystroke; the latest draft
+  // is also stashed here so the unmount-time flush sees the freshest
+  // value instead of a closed-over stale string.
+  const timerRef = useRef(null)
+  const draftRef = useRef(initial)
+  const entityNameRef = useRef(entity.name)
+  const onSaveRef = useRef(onSave)
+  useEffect(() => { onSaveRef.current = onSave }, [onSave])
+  useEffect(() => { entityNameRef.current = entity.name }, [entity.name])
 
-  // Reset the textarea whenever the user navigates to a different entity
-  // (or external edits change the underlying entity shape).
+  // Reset the textarea whenever the user navigates to a different
+  // entity (the `initial` memo changes too). Also clear any pending
+  // debounce so we don't apply edits from the previous entity.
   useEffect(() => {
     setDraft(initial)
-    setError(null)
-    setDirty(false)
+    draftRef.current = initial
+    setStatus('saved')
+    setErrorMsg(null)
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
   }, [initial])
 
-  const save = () => {
-    const result = parseEntityTtlFragment(draft, entity.name)
-    if (result.error) { setError(result.error); return }
-    setError(null)
-    setDirty(false)
-    // Apply only the parsed fields, leaving `name` alone (the parser
-    // rejected renames upstream).
+  // Single source of truth for the parse-and-commit step. Returns true
+  // when the commit landed, false on parse failure. Reads from the ref
+  // so blur/unmount flushes see the latest text even if React state
+  // hasn't propagated yet.
+  const flush = useCallback(() => {
+    const text = draftRef.current
+    if (text === initial) {
+      setStatus('saved')
+      setErrorMsg(null)
+      return true
+    }
+    const result = parseEntityTtlFragment(text, entityNameRef.current)
+    if (result.error) {
+      setStatus('invalid')
+      setErrorMsg(result.error)
+      return false
+    }
     const parsed = result.entity
-    onSave({
+    onSaveRef.current({
       label: parsed.label,
       parent: parsed.parent,
       altLabels: parsed.altLabels,
@@ -236,47 +281,73 @@ function EntityTtlView({ entity, onSave }) {
       disjointWith: parsed.disjointWith || [],
       comment: parsed.comment,
     })
+    setStatus('saved')
+    setErrorMsg(null)
+    return true
+  }, [initial])
+
+  // Final flush on unmount — covers entity-switch and view-toggle
+  // teardown. The empty dep array is intentional: this should only run
+  // when the component itself unmounts, not on every flush change.
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+        timerRef.current = null
+      }
+      flush()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const onChange = (e) => {
+    const next = e.target.value
+    setDraft(next)
+    draftRef.current = next
+    setStatus('pending')
+    setErrorMsg(null)
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => {
+      timerRef.current = null
+      flush()
+    }, 1000)
   }
 
-  const reset = () => {
-    setDraft(initial)
-    setError(null)
-    setDirty(false)
+  const onBlur = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+    flush()
   }
 
   return (
     <div style={card}>
       <div style={{ ...cardHeaderRow, cursor: 'default' }}>
-        <div style={{ flex: 1 }}>
-          <div style={cardTitle}>Turtle (this entity only)</div>
-          <div style={cardSubtitle}>
-            Edit the TTL directly. Saving rewrites this entity's label, synonyms, parent, semantics, and notes.
-            Renaming the identifier (<code>:{entity.name}</code>) isn't supported here.
-          </div>
-        </div>
+        <div style={cardTitle}>Turtle</div>
+        <div style={{ flex: 1 }} />
+        <StatusPill status={status} title={errorMsg || ''} />
       </div>
       <div style={cardBody}>
         <textarea
           value={draft}
-          onChange={(e) => { setDraft(e.target.value); setDirty(true); setError(null) }}
+          onChange={onChange}
+          onBlur={onBlur}
           style={ttlTextarea}
           spellCheck={false}
         />
-        {error && <div style={ttlError}>{error}</div>}
-        <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-          <button
-            onClick={save}
-            disabled={!dirty}
-            style={dirty ? ttlSaveBtn : ttlSaveBtnDisabled}
-          >Save</button>
-          <button
-            onClick={reset}
-            disabled={!dirty}
-            style={dirty ? ttlResetBtn : ttlResetBtnDisabled}
-          >Revert</button>
-        </div>
       </div>
     </div>
+  )
+}
+
+function StatusPill({ status, title }) {
+  const style = STATUS_STYLES[status] || STATUS_STYLES.saved
+  const label = status === 'saved' ? 'saved'
+              : status === 'pending' ? 'saving…'
+              : 'invalid'
+  return (
+    <span style={style} title={title}>{label}</span>
   )
 }
 
@@ -427,7 +498,7 @@ const modeToggleBtn = {
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
 }
 const ttlTextarea = {
-  width: '100%', minHeight: 240,
+  width: '100%', minHeight: 280,
   padding: '10px 12px',
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
   fontSize: 12, lineHeight: 1.55,
@@ -436,37 +507,16 @@ const ttlTextarea = {
   resize: 'vertical', boxSizing: 'border-box',
   whiteSpace: 'pre',
 }
-const ttlError = {
-  marginTop: 8, padding: '6px 10px',
-  fontSize: 12, color: '#92400e',
-  background: '#fef3c7', border: '1px solid #fcd34d',
-  borderRadius: 3,
+const statusPillBase = {
+  fontSize: 10, fontWeight: 600,
+  padding: '2px 8px', borderRadius: 10,
+  textTransform: 'uppercase', letterSpacing: 0.4,
+  flexShrink: 0,
 }
-const ttlSaveBtn = {
-  background: '#0f172a', color: '#fff', border: 'none',
-  borderRadius: 4, padding: '6px 14px',
-  fontSize: 12, fontWeight: 600, cursor: 'pointer',
-}
-const ttlSaveBtnDisabled = {
-  ...{
-    background: '#f1f5f9', color: '#cbd5e1', border: 'none',
-    borderRadius: 4, padding: '6px 14px',
-    fontSize: 12, fontWeight: 600, cursor: 'default',
-  },
-}
-const ttlResetBtn = {
-  background: '#fff', color: '#0f172a',
-  border: '1px solid #cbd5e1', borderRadius: 4,
-  padding: '6px 14px',
-  fontSize: 12, fontWeight: 600, cursor: 'pointer',
-}
-const ttlResetBtnDisabled = {
-  ...{
-    background: '#f1f5f9', color: '#cbd5e1',
-    border: '1px solid #e2e8f0', borderRadius: 4,
-    padding: '6px 14px',
-    fontSize: 12, fontWeight: 600, cursor: 'default',
-  },
+const STATUS_STYLES = {
+  saved:   { ...statusPillBase, background: '#dcfce7', color: '#166534' },
+  pending: { ...statusPillBase, background: '#fef3c7', color: '#92400e' },
+  invalid: { ...statusPillBase, background: '#fee2e2', color: '#991b1b', cursor: 'help' },
 }
 const fieldLabel = {
   display: 'block', fontSize: 11, color: '#475569',
