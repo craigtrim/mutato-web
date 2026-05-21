@@ -17,15 +17,13 @@
 
 :AbdominalPain a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "AbdominalPain" ;
+    rdfs:label "Abdominal Pain" ;
     skos:altLabel "belly pain" ;
-    skos:altLabel "stomach ache" ;
-    :inflection "abdominalpains" .
+    skos:altLabel "stomach ache" .
 
 :AbdominalXRay a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
-    rdfs:label "AbdominalXRay" ;
-    :inflection "abdominalxrays" .
+    rdfs:label "Abdominal X Ray" .
 
 :Abrasion a owl:Class ;
     rdfs:subClassOf :Injury ;
@@ -49,8 +47,7 @@
 
 :AllergicReaction a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "AllergicReaction" ;
-    :inflection "allergicreactions" .
+    rdfs:label "Allergic Reaction" .
 
 :Allergy a owl:Class ;
     rdfs:label "Allergy" ;
@@ -68,9 +65,8 @@
 
 :AnimalBite a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "AnimalBite" ;
-    skos:altLabel "dog bite" ;
-    :inflection "animalbites" .
+    rdfs:label "Animal Bite" ;
+    skos:altLabel "dog bite" .
 
 :Ankle a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -79,9 +75,8 @@
 
 :AnxietyAttack a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "AnxietyAttack" ;
-    skos:altLabel "panic attack" ;
-    :inflection "anxietyattacks" .
+    rdfs:label "Anxiety Attack" ;
+    skos:altLabel "panic attack" .
 
 :Arrhythmia a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -103,14 +98,12 @@
 
 :AsthmaExacerbation a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "AsthmaExacerbation" ;
-    :inflection "asthmaexacerbations" .
+    rdfs:label "Asthma Exacerbation" .
 
 :AtrialFibrillation a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "AtrialFibrillation" ;
-    skos:altLabel "AFib" ;
-    :inflection "atrialfibrillations" .
+    rdfs:label "Atrial Fibrillation" ;
+    skos:altLabel "AFib" .
 
 :Azithromycin a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -137,19 +130,16 @@
 
 :BackPain a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "BackPain" ;
-    skos:altLabel "lumbago" ;
-    :inflection "backpains" .
+    rdfs:label "Back Pain" ;
+    skos:altLabel "lumbago" .
 
 :BeeStingAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "BeeStingAllergy" ;
-    :inflection "beestingallergies" .
+    rdfs:label "Bee Sting Allergy" .
 
 :BillingSpecialist a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "BillingSpecialist" ;
-    :inflection "billingspecialists" .
+    rdfs:label "Billing Specialist" .
 
 :Bleeding a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -159,27 +149,23 @@
 
 :BloodDraw a owl:Class ;
     rdfs:subClassOf :DiagnosticTest ;
-    rdfs:label "BloodDraw" ;
-    skos:altLabel "phlebotomy" ;
-    :inflection "blooddraws" .
+    rdfs:label "Blood Draw" ;
+    skos:altLabel "phlebotomy" .
 
 :BloodPressure a owl:Class ;
     rdfs:subClassOf :VitalSign ;
-    rdfs:label "BloodPressure" ;
-    skos:altLabel "BP" ;
-    :inflection "bloodpressures" .
+    rdfs:label "Blood Pressure" ;
+    skos:altLabel "BP" .
 
 :BloodPressureCuff a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
-    rdfs:label "BloodPressureCuff" ;
+    rdfs:label "Blood Pressure Cuff" ;
     skos:altLabel "sphygmomanometer" ;
-    skos:altLabel "BP cuff" ;
-    :inflection "bloodpressurecuffs" .
+    skos:altLabel "BP cuff" .
 
 :BlurredVision a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "BlurredVision" ;
-    :inflection "blurredvisions" .
+    rdfs:label "Blurred Vision" .
 
 :BodyPart a owl:Class ;
     rdfs:label "Body Part" .
@@ -203,11 +189,10 @@
     skos:altLabel "thermal burn" ;
     :inflection "burns" .
 
-:Burn2 a owl:Class ;
+:BurnInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "Burn2" ;
-    skos:altLabel "burn injury" ;
-    :inflection "burn2s" .
+    rdfs:label "Burn Injury" ;
+    skos:altLabel "burn" .
 
 :CBC a owl:Class ;
     rdfs:subClassOf :LabTest ;
@@ -223,28 +208,24 @@
 
 :CTAbdomen a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
-    rdfs:label "CTAbdomen" ;
-    skos:altLabel "abdominal CT" ;
-    :inflection "ctabdomens" .
+    rdfs:label "CT Abdomen" ;
+    skos:altLabel "abdominal CT" .
 
 :CTHead a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
-    rdfs:label "CTHead" ;
-    skos:altLabel "head CT" ;
-    :inflection "ctheads" .
+    rdfs:label "CT Head" ;
+    skos:altLabel "head CT" .
 
 :CardiovascularSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "CardiovascularSystem" ;
+    rdfs:label "Cardiovascular System" ;
     skos:altLabel "cardiac system" ;
-    skos:altLabel "circulatory system" ;
-    :inflection "cardiovascularsystems" .
+    skos:altLabel "circulatory system" .
 
 :CastApplication a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "CastApplication" ;
-    skos:altLabel "casting" ;
-    :inflection "castapplications" .
+    rdfs:label "Cast Application" ;
+    skos:altLabel "casting" .
 
 :Cauterization a owl:Class ;
     rdfs:subClassOf :Procedure ;
@@ -275,25 +256,21 @@
 
 :ChestPain a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "ChestPain" ;
-    skos:altLabel "thoracic pain" ;
-    :inflection "chestpains" .
+    rdfs:label "Chest Pain" ;
+    skos:altLabel "thoracic pain" .
 
 :ChestPainCondition a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "ChestPainCondition" ;
-    :inflection "chestpainconditions" .
+    rdfs:label "Chest Pain Condition" .
 
 :ChestPressure a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "ChestPressure" ;
-    :inflection "chestpressures" .
+    rdfs:label "Chest Pressure" .
 
 :ChestXRay a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
-    rdfs:label "ChestXRay" ;
-    skos:altLabel "CXR" ;
-    :inflection "chestxrays" .
+    rdfs:label "Chest X Ray" ;
+    skos:altLabel "CXR" .
 
 :Ciprofloxacin a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -316,8 +293,7 @@
 
 :CommercialPayer a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
-    rdfs:label "CommercialPayer" ;
-    :inflection "commercialpayers" .
+    rdfs:label "Commercial Payer" .
 
 :Concussion a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -327,8 +303,7 @@
 
 :ConcussionInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "ConcussionInjury" ;
-    :inflection "concussioninjuries" .
+    rdfs:label "Concussion Injury" .
 
 :Condition a owl:Class ;
     rdfs:label "Condition" ;
@@ -336,21 +311,18 @@
 
 :ConjunctivitisCondition a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "ConjunctivitisCondition" ;
+    rdfs:label "Conjunctivitis Condition" ;
     skos:altLabel "conjunctivitis" ;
-    skos:altLabel "pink eye" ;
-    :inflection "conjunctivitisconditions" .
+    skos:altLabel "pink eye" .
 
 :ConsentForm a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "ConsentForm" ;
-    :inflection "consentforms" .
+    rdfs:label "Consent Form" .
 
 :ContrastAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "ContrastAllergy" ;
-    skos:altLabel "contrast dye allergy" ;
-    :inflection "contrastallergies" .
+    rdfs:label "Contrast Allergy" ;
+    skos:altLabel "contrast dye allergy" .
 
 :Contusion a owl:Class ;
     rdfs:subClassOf :Injury ;
@@ -370,9 +342,8 @@
 
 :CovidVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "CovidVaccine" ;
-    skos:altLabel "COVID-19 vaccine" ;
-    :inflection "covidvaccines" .
+    rdfs:label "Covid Vaccine" ;
+    skos:altLabel "COVID-19 vaccine" .
 
 :Creatinine a owl:Class ;
     rdfs:subClassOf :LabTest ;
@@ -391,13 +362,11 @@
 
 :DDimer a owl:Class ;
     rdfs:subClassOf :LabTest ;
-    rdfs:label "DDimer" ;
-    :inflection "ddimers" .
+    rdfs:label "D Dimer" .
 
 :DOTExam a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "DOTExam" ;
-    :inflection "dotexams" .
+    rdfs:label "DOT Exam" .
 
 :Deductible a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
@@ -417,10 +386,9 @@
 
 :DiabeticEmergency a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "DiabeticEmergency" ;
+    rdfs:label "Diabetic Emergency" ;
     skos:altLabel "hyperglycemia" ;
-    skos:altLabel "hypoglycemia" ;
-    :inflection "diabeticemergencies" .
+    skos:altLabel "hypoglycemia" .
 
 :DiagnosticTest a owl:Class ;
     rdfs:label "Diagnostic Test" .
@@ -439,7 +407,7 @@
 
 :DischargeInstructions a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "DischargeInstructions" .
+    rdfs:label "Discharge Instructions" .
 
 :Dislocation a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -448,8 +416,7 @@
 
 :DislocationInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "DislocationInjury" ;
-    :inflection "dislocationinjuries" .
+    rdfs:label "Dislocation Injury" .
 
 :Dizziness a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -467,14 +434,12 @@
 
 :EKGMachine a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
-    rdfs:label "EKGMachine" ;
-    :inflection "ekgmachines" .
+    rdfs:label "EKG Machine" .
 
 :EKGProcedure a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "EKGProcedure" ;
-    skos:altLabel "ECG" ;
-    :inflection "ekgprocedures" .
+    rdfs:label "EKG Procedure" ;
+    skos:altLabel "ECG" .
 
 :EOB a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
@@ -490,15 +455,13 @@
 
 :EarInfection a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "EarInfection" ;
+    rdfs:label "Ear Infection" ;
     skos:altLabel "otitis media" ;
-    skos:altLabel "AOM" ;
-    :inflection "earinfections" .
+    skos:altLabel "AOM" .
 
 :EarIrrigation a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "EarIrrigation" ;
-    :inflection "earirrigations" .
+    rdfs:label "Ear Irrigation" .
 
 :Elbow a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -511,8 +474,7 @@
 
 :EndocrineSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "EndocrineSystem" ;
-    :inflection "endocrinesystems" .
+    rdfs:label "Endocrine System" .
 
 :Epinephrine a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -529,13 +491,11 @@
 
 :ExamTable a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
-    rdfs:label "ExamTable" ;
-    :inflection "examtables" .
+    rdfs:label "Exam Table" .
 
 :ExtremityXRay a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
-    rdfs:label "ExtremityXRay" ;
-    :inflection "extremityxrays" .
+    rdfs:label "Extremity X Ray" .
 
 :Eye a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -545,13 +505,11 @@
 
 :EyeInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "EyeInjury" ;
-    :inflection "eyeinjuries" .
+    rdfs:label "Eye Injury" .
 
 :EyeIrrigation a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "EyeIrrigation" ;
-    :inflection "eyeirrigations" .
+    rdfs:label "Eye Irrigation" .
 
 :Fatigue a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -574,26 +532,22 @@
 
 :FlexerilMed a owl:Class ;
     rdfs:subClassOf :Medication ;
-    rdfs:label "FlexerilMed" ;
-    skos:altLabel "cyclobenzaprine" ;
-    :inflection "flexerilmeds" .
+    rdfs:label "Flexeril Med" ;
+    skos:altLabel "cyclobenzaprine" .
 
 :FluVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "FluVaccine" ;
-    skos:altLabel "influenza vaccine" ;
-    :inflection "fluvaccines" .
+    rdfs:label "Flu Vaccine" ;
+    skos:altLabel "influenza vaccine" .
 
 :FollowUpVisit a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "FollowUpVisit" ;
-    skos:altLabel "follow-up" ;
-    :inflection "followupvisits" .
+    rdfs:label "Follow Up Visit" ;
+    skos:altLabel "follow-up" .
 
 :FoodPoisoning a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "FoodPoisoning" ;
-    :inflection "foodpoisonings" .
+    rdfs:label "Food Poisoning" .
 
 :Foot a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -602,14 +556,12 @@
 
 :ForeignBodyCondition a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "ForeignBodyCondition" ;
-    skos:altLabel "foreign body" ;
-    :inflection "foreignbodyconditions" .
+    rdfs:label "Foreign Body Condition" ;
+    skos:altLabel "foreign body" .
 
 :ForeignBodyRemoval a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "ForeignBodyRemoval" ;
-    :inflection "foreignbodyremovals" .
+    rdfs:label "Foreign Body Removal" .
 
 :Fracture a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -619,8 +571,7 @@
 
 :FractureInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "FractureInjury" ;
-    :inflection "fractureinjuries" .
+    rdfs:label "Fracture Injury" .
 
 :Gastroenteritis a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -648,8 +599,7 @@
 
 :HIPAAConsent a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "HIPAAConsent" ;
-    :inflection "hipaaconsents" .
+    rdfs:label "HIPAA Consent" .
 
 :Hand a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -664,8 +614,7 @@
 
 :HeadInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "HeadInjury" ;
-    :inflection "headinjuries" .
+    rdfs:label "Head Injury" .
 
 :Headache a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -675,15 +624,13 @@
 
 :HeartRate a owl:Class ;
     rdfs:subClassOf :VitalSign ;
-    rdfs:label "HeartRate" ;
+    rdfs:label "Heart Rate" ;
     skos:altLabel "pulse" ;
-    skos:altLabel "HR" ;
-    :inflection "heartrates" .
+    skos:altLabel "HR" .
 
 :HeatExhaustion a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "HeatExhaustion" ;
-    :inflection "heatexhaustions" .
+    rdfs:label "Heat Exhaustion" .
 
 :Height a owl:Class ;
     rdfs:subClassOf :VitalSign ;
@@ -697,9 +644,8 @@
 
 :HematologicSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "HematologicSystem" ;
-    skos:altLabel "blood system" ;
-    :inflection "hematologicsystems" .
+    rdfs:label "Hematologic System" ;
+    skos:altLabel "blood system" .
 
 :Hemoptysis a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -708,13 +654,11 @@
 
 :HepatitisAVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "HepatitisAVaccine" ;
-    :inflection "hepatitisavaccines" .
+    rdfs:label "Hepatitis A Vaccine" .
 
 :HepatitisBVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "HepatitisBVaccine" ;
-    :inflection "hepatitisbvaccines" .
+    rdfs:label "Hepatitis B Vaccine" .
 
 :Hepatomegaly a owl:Class ;
     rdfs:subClassOf :Sign ;
@@ -768,9 +712,8 @@
 
 :IVInsertion a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "IVInsertion" ;
-    skos:altLabel "intravenous line" ;
-    :inflection "ivinsertions" .
+    rdfs:label "IV Insertion" ;
+    skos:altLabel "intravenous line" .
 
 :Ibuprofen a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -789,13 +732,11 @@
 
 :ImmuneSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "ImmuneSystem" ;
-    :inflection "immunesystems" .
+    rdfs:label "Immune System" .
 
 :InNetwork a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
-    rdfs:label "InNetwork" ;
-    :inflection "innetworks" .
+    rdfs:label "In Network" .
 
 :Incision a owl:Class ;
     rdfs:subClassOf :Procedure ;
@@ -812,15 +753,13 @@
 
 :InfluenzaPCR a owl:Class ;
     rdfs:subClassOf :LabTest ;
-    rdfs:label "InfluenzaPCR" ;
-    :inflection "influenzapcrs" .
+    rdfs:label "Influenza PCR" .
 
 :InjectionProcedure a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "InjectionProcedure" ;
+    rdfs:label "Injection Procedure" ;
     skos:altLabel "intramuscular injection" ;
-    skos:altLabel "IM injection" ;
-    :inflection "injectionprocedures" .
+    skos:altLabel "IM injection" .
 
 :Injury a owl:Class ;
     rdfs:label "Injury" ;
@@ -828,17 +767,15 @@
 
 :InsectBite a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "InsectBite" ;
-    :inflection "insectbites" .
+    rdfs:label "Insect Bite" .
 
 :InsuranceConcept a owl:Class ;
     rdfs:label "Insurance Concept" .
 
 :IntegumentarySystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "IntegumentarySystem" ;
-    skos:altLabel "skin system" ;
-    :inflection "integumentarysystems" .
+    rdfs:label "Integumentary System" ;
+    skos:altLabel "skin system" .
 
 :Itching a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -866,44 +803,37 @@
     skos:altLabel "cut" ;
     :inflection "lacerations" .
 
-:Laceration2 a owl:Class ;
+:LacerationInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "Laceration2" ;
-    skos:altLabel "laceration" ;
-    :inflection "laceration2s" .
+    rdfs:label "Laceration Injury" ;
+    skos:altLabel "laceration" .
 
 :LatexAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "LatexAllergy" ;
-    :inflection "latexallergies" .
+    rdfs:label "Latex Allergy" .
 
 :Level1Emergent a owl:Class ;
     rdfs:subClassOf :Triage ;
-    rdfs:label "Level1Emergent" ;
-    skos:altLabel "emergent" ;
-    :inflection "level1emergents" .
+    rdfs:label "Level1 Emergent" ;
+    skos:altLabel "emergent" .
 
 :Level2Urgent a owl:Class ;
     rdfs:subClassOf :Triage ;
-    rdfs:label "Level2Urgent" ;
-    skos:altLabel "urgent" ;
-    :inflection "level2urgents" .
+    rdfs:label "Level2 Urgent" ;
+    skos:altLabel "urgent" .
 
 :Level3LessUrgent a owl:Class ;
     rdfs:subClassOf :Triage ;
-    rdfs:label "Level3LessUrgent" ;
-    :inflection "level3lessurgents" .
+    rdfs:label "Level3 Less Urgent" .
 
 :Level4NonUrgent a owl:Class ;
     rdfs:subClassOf :Triage ;
-    rdfs:label "Level4NonUrgent" ;
-    skos:altLabel "non-urgent" ;
-    :inflection "level4nonurgents" .
+    rdfs:label "Level4 Non Urgent" ;
+    skos:altLabel "non-urgent" .
 
 :Level5Routine a owl:Class ;
     rdfs:subClassOf :Triage ;
-    rdfs:label "Level5Routine" ;
-    :inflection "level5routines" .
+    rdfs:label "Level5 Routine" .
 
 :Lidocaine a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -929,13 +859,11 @@
 
 :LymphaticSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "LymphaticSystem" ;
-    :inflection "lymphaticsystems" .
+    rdfs:label "Lymphatic System" .
 
 :MMRVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "MMRVaccine" ;
-    :inflection "mmrvaccines" .
+    rdfs:label "MMR Vaccine" .
 
 :MRI a owl:Class ;
     rdfs:subClassOf :ImagingStudy ;
@@ -949,9 +877,8 @@
 
 :MedicalAssistant a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "MedicalAssistant" ;
-    skos:altLabel "MA" ;
-    :inflection "medicalassistants" .
+    rdfs:label "Medical Assistant" ;
+    skos:altLabel "MA" .
 
 :MedicalEquipment a owl:Class ;
     rdfs:label "Medical Equipment" .
@@ -967,15 +894,13 @@
 
 :MigraineCondition a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "MigraineCondition" ;
-    skos:altLabel "migraine" ;
-    :inflection "migraineconditions" .
+    rdfs:label "Migraine Condition" ;
+    skos:altLabel "migraine" .
 
 :MonoTest a owl:Class ;
     rdfs:subClassOf :LabTest ;
-    rdfs:label "MonoTest" ;
-    skos:altLabel "monospot" ;
-    :inflection "monotests" .
+    rdfs:label "Mono Test" ;
+    skos:altLabel "monospot" .
 
 :Mouth a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -1003,9 +928,8 @@
 
 :NasalCongestion a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "NasalCongestion" ;
-    skos:altLabel "stuffy nose" ;
-    :inflection "nasalcongestions" .
+    rdfs:label "Nasal Congestion" ;
+    skos:altLabel "stuffy nose" .
 
 :Nausea a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -1030,10 +954,9 @@
 
 :NervousSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "NervousSystem" ;
+    rdfs:label "Nervous System" ;
     skos:altLabel "CNS" ;
-    skos:altLabel "PNS" ;
-    :inflection "nervoussystems" .
+    skos:altLabel "PNS" .
 
 :Nose a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -1043,9 +966,8 @@
 
 :NursePractitioner a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "NursePractitioner" ;
-    skos:altLabel "NP" ;
-    :inflection "nursepractitioners" .
+    rdfs:label "Nurse Practitioner" ;
+    skos:altLabel "NP" .
 
 :Ondansetron a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -1077,26 +999,22 @@
 
 :OutOfNetwork a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
-    rdfs:label "OutOfNetwork" ;
-    :inflection "outofnetworks" .
+    rdfs:label "Out Of Network" .
 
 :OxygenAdministration a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "OxygenAdministration" ;
-    skos:altLabel "O2 therapy" ;
-    :inflection "oxygenadministrations" .
+    rdfs:label "Oxygen Administration" ;
+    skos:altLabel "O2 therapy" .
 
 :OxygenSaturation a owl:Class ;
     rdfs:subClassOf :VitalSign ;
-    rdfs:label "OxygenSaturation" ;
+    rdfs:label "Oxygen Saturation" ;
     skos:altLabel "SpO2" ;
-    skos:altLabel "pulse ox" ;
-    :inflection "oxygensaturations" .
+    skos:altLabel "pulse ox" .
 
 :OxygenTank a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
-    rdfs:label "OxygenTank" ;
-    :inflection "oxygentanks" .
+    rdfs:label "Oxygen Tank" .
 
 :Pain a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -1106,8 +1024,7 @@
 
 :PainScore a owl:Class ;
     rdfs:subClassOf :VitalSign ;
-    rdfs:label "PainScore" ;
-    :inflection "painscores" .
+    rdfs:label "Pain Score" .
 
 :Pallor a owl:Class ;
     rdfs:subClassOf :Sign ;
@@ -1123,8 +1040,7 @@
 
 :PeanutAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "PeanutAllergy" ;
-    :inflection "peanutallergies" .
+    rdfs:label "Peanut Allergy" .
 
 :Pelvis a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -1132,9 +1048,8 @@
 
 :PenicillinAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "PenicillinAllergy" ;
-    skos:altLabel "pcn allergy" ;
-    :inflection "penicillinallergies" .
+    rdfs:label "Penicillin Allergy" ;
+    skos:altLabel "pcn allergy" .
 
 :Personnel a owl:Class ;
     rdfs:label "Personnel" ;
@@ -1147,17 +1062,15 @@
 
 :PhotophobiaSymptom a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "PhotophobiaSymptom" ;
+    rdfs:label "Photophobia Symptom" ;
     skos:altLabel "photophobia" ;
-    skos:altLabel "light sensitivity" ;
-    :inflection "photophobiasymptoms" .
+    skos:altLabel "light sensitivity" .
 
 :PhysicalExam a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "PhysicalExam" ;
+    rdfs:label "Physical Exam" ;
     skos:altLabel "sports physical" ;
-    skos:altLabel "school physical" ;
-    :inflection "physicalexams" .
+    skos:altLabel "school physical" .
 
 :Physician a owl:Class ;
     rdfs:subClassOf :Personnel ;
@@ -1168,14 +1081,12 @@
 
 :PhysicianAssistant a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "PhysicianAssistant" ;
-    skos:altLabel "PA" ;
-    :inflection "physicianassistants" .
+    rdfs:label "Physician Assistant" ;
+    skos:altLabel "PA" .
 
 :PneumococcalVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "PneumococcalVaccine" ;
-    :inflection "pneumococcalvaccines" .
+    rdfs:label "Pneumococcal Vaccine" .
 
 :Pneumonia a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -1184,14 +1095,12 @@
 
 :PointOfCareTest a owl:Class ;
     rdfs:subClassOf :DiagnosticTest ;
-    rdfs:label "PointOfCareTest" ;
-    skos:altLabel "POC test" ;
-    :inflection "pointofcaretests" .
+    rdfs:label "Point Of Care Test" ;
+    skos:altLabel "POC test" .
 
 :PreEmploymentExam a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "PreEmploymentExam" ;
-    :inflection "preemploymentexams" .
+    rdfs:label "Pre Employment Exam" .
 
 :Prednisone a owl:Class ;
     rdfs:subClassOf :Medication ;
@@ -1200,21 +1109,18 @@
 
 :PregnancyTest a owl:Class ;
     rdfs:subClassOf :LabTest ;
-    rdfs:label "PregnancyTest" ;
-    skos:altLabel "hCG" ;
-    :inflection "pregnancytests" .
+    rdfs:label "Pregnancy Test" ;
+    skos:altLabel "hCG" .
 
 :PrescriptionDoc a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "PrescriptionDoc" ;
-    skos:altLabel "Rx" ;
-    :inflection "prescriptiondocs" .
+    rdfs:label "Prescription Doc" ;
+    skos:altLabel "Rx" .
 
 :PriorAuthorization a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
-    rdfs:label "PriorAuthorization" ;
-    skos:altLabel "prior auth" ;
-    :inflection "priorauthorizations" .
+    rdfs:label "Prior Authorization" ;
+    skos:altLabel "prior auth" .
 
 :Procedure a owl:Class ;
     rdfs:label "Procedure" ;
@@ -1222,14 +1128,12 @@
 
 :PulseOximeter a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
-    rdfs:label "PulseOximeter" ;
-    skos:altLabel "pulse ox" ;
-    :inflection "pulseoximeters" .
+    rdfs:label "Pulse Oximeter" ;
+    skos:altLabel "pulse ox" .
 
 :PulseOximetry a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "PulseOximetry" ;
-    :inflection "pulseoximetries" .
+    rdfs:label "Pulse Oximetry" .
 
 :Puncture a owl:Class ;
     rdfs:subClassOf :Injury ;
@@ -1244,18 +1148,15 @@
 
 :RapidCovidTest a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "RapidCovidTest" ;
-    :inflection "rapidcovidtests" .
+    rdfs:label "Rapid Covid Test" .
 
 :RapidFluTest a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "RapidFluTest" ;
-    :inflection "rapidflutests" .
+    rdfs:label "Rapid Flu Test" .
 
 :RapidStrepTest a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "RapidStrepTest" ;
-    :inflection "rapidstreptests" .
+    rdfs:label "Rapid Strep Test" .
 
 :Rash a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -1277,32 +1178,27 @@
 
 :ReferralLetter a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "ReferralLetter" ;
-    :inflection "referralletters" .
+    rdfs:label "Referral Letter" .
 
 :RegisteredNurse a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "RegisteredNurse" ;
+    rdfs:label "Registered Nurse" ;
     skos:altLabel "RN" ;
-    skos:altLabel "nurse" ;
-    :inflection "registerednurses" .
+    skos:altLabel "nurse" .
 
 :ReproductiveSystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "ReproductiveSystem" ;
-    :inflection "reproductivesystems" .
+    rdfs:label "Reproductive System" .
 
 :RespiratoryRate a owl:Class ;
     rdfs:subClassOf :VitalSign ;
-    rdfs:label "RespiratoryRate" ;
-    skos:altLabel "RR" ;
-    :inflection "respiratoryrates" .
+    rdfs:label "Respiratory Rate" ;
+    skos:altLabel "RR" .
 
 :RespiratorySystem a owl:Class ;
     rdfs:subClassOf :BodySystem ;
-    rdfs:label "RespiratorySystem" ;
-    skos:altLabel "pulmonary system" ;
-    :inflection "respiratorysystems" .
+    rdfs:label "Respiratory System" ;
+    skos:altLabel "pulmonary system" .
 
 :Rhinorrhea a owl:Class ;
     rdfs:subClassOf :Symptom ;
@@ -1312,25 +1208,21 @@
 
 :ScheduledVisit a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "ScheduledVisit" ;
-    :inflection "scheduledvisits" .
+    rdfs:label "Scheduled Visit" .
 
 :ShellfishAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "ShellfishAllergy" ;
-    :inflection "shellfishallergies" .
+    rdfs:label "Shellfish Allergy" .
 
 :ShinglesVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "ShinglesVaccine" ;
-    :inflection "shinglesvaccines" .
+    rdfs:label "Shingles Vaccine" .
 
 :ShortnessOfBreath a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "ShortnessOfBreath" ;
+    rdfs:label "Shortness Of Breath" ;
     skos:altLabel "SOB" ;
-    skos:altLabel "dyspnea" ;
-    :inflection "shortnessofbreaths" .
+    skos:altLabel "dyspnea" .
 
 :Shoulder a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -1343,21 +1235,19 @@
 
 :SinusInfection a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "SinusInfection" ;
-    skos:altLabel "sinusitis" ;
-    :inflection "sinusinfections" .
+    rdfs:label "Sinus Infection" ;
+    skos:altLabel "sinusitis" .
 
 :SkinAbscess a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "SkinAbscess" ;
+    rdfs:label "Skin Abscess" ;
     skos:altLabel "abscess" .
 
 :SoreThroat a owl:Class ;
     rdfs:subClassOf :Symptom ;
-    rdfs:label "SoreThroat" ;
+    rdfs:label "Sore Throat" ;
     skos:altLabel "pharyngitis pain" ;
-    skos:altLabel "throat pain" ;
-    :inflection "sorethroats" .
+    skos:altLabel "throat pain" .
 
 :Splenomegaly a owl:Class ;
     rdfs:subClassOf :Sign ;
@@ -1372,14 +1262,12 @@
 
 :SplintApplication a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "SplintApplication" ;
-    skos:altLabel "splinting" ;
-    :inflection "splintapplications" .
+    rdfs:label "Splint Application" ;
+    skos:altLabel "splinting" .
 
 :SportsInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "SportsInjury" ;
-    :inflection "sportsinjuries" .
+    rdfs:label "Sports Injury" .
 
 :Sprain a owl:Class ;
     rdfs:subClassOf :Condition ;
@@ -1388,8 +1276,7 @@
 
 :SprainInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "SprainInjury" ;
-    :inflection "spraininjuries" .
+    rdfs:label "Sprain Injury" .
 
 :Stethoscope a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
@@ -1403,24 +1290,20 @@
 
 :StrainInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "StrainInjury" ;
-    :inflection "straininjuries" .
+    rdfs:label "Strain Injury" .
 
 :StrepCulture a owl:Class ;
     rdfs:subClassOf :LabTest ;
-    rdfs:label "StrepCulture" ;
-    :inflection "strepcultures" .
+    rdfs:label "Strep Culture" .
 
 :StrepThroat a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "StrepThroat" ;
-    skos:altLabel "streptococcal pharyngitis" ;
-    :inflection "strepthroats" .
+    rdfs:label "Strep Throat" ;
+    skos:altLabel "streptococcal pharyngitis" .
 
 :SulfaAllergy a owl:Class ;
     rdfs:subClassOf :Allergy ;
-    rdfs:label "SulfaAllergy" ;
-    :inflection "sulfaallergies" .
+    rdfs:label "Sulfa Allergy" .
 
 :Suture a owl:Class ;
     rdfs:subClassOf :Procedure ;
@@ -1454,25 +1337,18 @@
     rdfs:subClassOf :Sign ;
     rdfs:label "Tachypnea" ;
     skos:altLabel "fast breathing" ;
-    :inflection "tachypneas" .
-
-:Tachypnea2 a owl:Class ;
-    rdfs:subClassOf :Sign ;
-    rdfs:label "Tachypnea2" ;
     skos:altLabel "rapid breathing" ;
-    :inflection "tachypnea2s" .
+    :inflection "tachypneas" .
 
 :TdapVaccine a owl:Class ;
     rdfs:subClassOf :Vaccine ;
-    rdfs:label "TdapVaccine" ;
-    skos:altLabel "tetanus vaccine" ;
-    :inflection "tdapvaccines" .
+    rdfs:label "Tdap Vaccine" ;
+    skos:altLabel "tetanus vaccine" .
 
 :TelemedicineVisit a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "TelemedicineVisit" ;
-    skos:altLabel "telehealth" ;
-    :inflection "telemedicinevisits" .
+    rdfs:label "Telemedicine Visit" ;
+    skos:altLabel "telehealth" .
 
 :Temperature a owl:Class ;
     rdfs:subClassOf :VitalSign ;
@@ -1482,10 +1358,9 @@
 
 :TetanusVaccine a owl:Class ;
     rdfs:subClassOf :Medication ;
-    rdfs:label "TetanusVaccine" ;
+    rdfs:label "Tetanus Vaccine" ;
     skos:altLabel "Td" ;
-    skos:altLabel "Tdap" ;
-    :inflection "tetanusvaccines" .
+    skos:altLabel "Tdap" .
 
 :Thermometer a owl:Class ;
     rdfs:subClassOf :MedicalEquipment ;
@@ -1509,8 +1384,7 @@
 
 :TriageNurse a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "TriageNurse" ;
-    :inflection "triagenurses" .
+    rdfs:label "Triage Nurse" .
 
 :Troponin a owl:Class ;
     rdfs:subClassOf :LabTest ;
@@ -1531,10 +1405,9 @@
 
 :UpperRespiratoryInfection a owl:Class ;
     rdfs:subClassOf :Condition ;
-    rdfs:label "UpperRespiratoryInfection" ;
+    rdfs:label "Upper Respiratory Infection" ;
     skos:altLabel "URI" ;
-    skos:altLabel "common cold" ;
-    :inflection "upperrespiratoryinfections" .
+    skos:altLabel "common cold" .
 
 :Urinalysis a owl:Class ;
     rdfs:subClassOf :LabTest ;
@@ -1543,8 +1416,7 @@
 
 :UrinalysisProcedure a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "UrinalysisProcedure" ;
-    :inflection "urinalysisprocedures" .
+    rdfs:label "Urinalysis Procedure" .
 
 :Vaccine a owl:Class ;
     rdfs:label "Vaccine" ;
@@ -1557,9 +1429,8 @@
 
 :VisitSummary a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "VisitSummary" ;
-    skos:altLabel "after-visit summary" ;
-    :inflection "visitsummaries" .
+    rdfs:label "Visit Summary" ;
+    skos:altLabel "after-visit summary" .
 
 :VitalSign a owl:Class ;
     rdfs:label "Vital Sign" .
@@ -1572,8 +1443,7 @@
 
 :WalkInVisit a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "WalkInVisit" ;
-    :inflection "walkinvisits" .
+    rdfs:label "Walk In Visit" .
 
 :Weight a owl:Class ;
     rdfs:subClassOf :VitalSign ;
@@ -1587,31 +1457,26 @@
 
 :WorkExcuseNote a owl:Class ;
     rdfs:subClassOf :Document ;
-    rdfs:label "WorkExcuseNote" ;
-    skos:altLabel "doctor's note" ;
-    :inflection "workexcusenotes" .
+    rdfs:label "Work Excuse Note" ;
+    skos:altLabel "doctor's note" .
 
 :WorkInjuryVisit a owl:Class ;
     rdfs:subClassOf :Encounter ;
-    rdfs:label "WorkInjuryVisit" ;
-    skos:altLabel "workers comp visit" ;
-    :inflection "workinjuryvisits" .
+    rdfs:label "Work Injury Visit" ;
+    skos:altLabel "workers comp visit" .
 
 :WorkRelatedInjury a owl:Class ;
     rdfs:subClassOf :Injury ;
-    rdfs:label "WorkRelatedInjury" ;
-    :inflection "workrelatedinjuries" .
+    rdfs:label "Work Related Injury" .
 
 :WorkersComp a owl:Class ;
     rdfs:subClassOf :InsuranceConcept ;
-    rdfs:label "WorkersComp" ;
-    skos:altLabel "workers compensation" ;
-    :inflection "workerscomps" .
+    rdfs:label "Workers Comp" ;
+    skos:altLabel "workers compensation" .
 
 :WoundIrrigation a owl:Class ;
     rdfs:subClassOf :Procedure ;
-    rdfs:label "WoundIrrigation" ;
-    :inflection "woundirrigations" .
+    rdfs:label "Wound Irrigation" .
 
 :Wrist a owl:Class ;
     rdfs:subClassOf :BodyPart ;
@@ -6469,6 +6334,10 @@
 :Burn_Case_n07848 a :Burn ;
     rdfs:label "Burn Case #07848" ;
     skos:altLabel "burn case no.07848" .
+
+:Burn_Case_n07887 a :Burn ;
+    rdfs:label "Burn Case #07887" ;
+    skos:altLabel "burn case no.07887" .
 
 :CBC_Sample_n00034 a :CBC ;
     rdfs:label "CBC Sample #00034" ;

@@ -11,14 +11,12 @@
 
 :APIStandard a owl:Class ;
     rdfs:subClassOf :Regulation ;
-    rdfs:label "APIStandard" ;
-    skos:altLabel "API" ;
-    :inflection "apistandards" .
+    rdfs:label "API Standard" ;
+    skos:altLabel "API" .
 
 :AppraisalWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "AppraisalWell" ;
-    :inflection "appraisalwells" .
+    rdfs:label "Appraisal Well" .
 
 :Aquifer a owl:Class ;
     rdfs:subClassOf :Reservoir ;
@@ -53,11 +51,10 @@
 
 :BlowoutPreventer a owl:Class ;
     rdfs:subClassOf :Equipment ;
-    rdfs:label "BlowoutPreventer" ;
+    rdfs:label "Blowout Preventer" ;
     skos:altLabel "BOP" ;
     skos:altLabel "annular preventer" ;
-    skos:altLabel "ram preventer" ;
-    :inflection "blowoutpreventers" .
+    skos:altLabel "ram preventer" .
 
 :Carbonate a owl:Class ;
     rdfs:subClassOf :Reservoir ;
@@ -83,14 +80,12 @@
 
 :CoalbedMethane a owl:Class ;
     rdfs:subClassOf :Reservoir ;
-    rdfs:label "CoalbedMethane" ;
-    skos:altLabel "CBM" ;
-    :inflection "coalbedmethanes" .
+    rdfs:label "Coalbed Methane" ;
+    skos:altLabel "CBM" .
 
 :CompanyMan a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "CompanyMan" ;
-    :inflection "companymans" .
+    rdfs:label "Company Man" .
 
 :Completion a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -106,8 +101,7 @@
 
 :CompressorStation a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "CompressorStation" ;
-    :inflection "compressorstations" .
+    rdfs:label "Compressor Station" .
 
 :Condensate a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
@@ -118,11 +112,10 @@
 
 :CrudeOil a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
-    rdfs:label "CrudeOil" ;
+    rdfs:label "Crude Oil" ;
     skos:altLabel "crude" ;
     skos:altLabel "sour crude" ;
-    skos:altLabel "sweet crude" ;
-    :inflection "crudeoils" .
+    skos:altLabel "sweet crude" .
 
 :Decommissioning a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -133,9 +126,8 @@
 
 :DeviatedWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "DeviatedWell" ;
-    skos:altLabel "directional well" ;
-    :inflection "deviatedwells" .
+    rdfs:label "Deviated Well" ;
+    skos:altLabel "directional well" .
 
 :Diesel a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
@@ -146,11 +138,10 @@
 
 :DrillBit a owl:Class ;
     rdfs:subClassOf :Equipment ;
-    rdfs:label "DrillBit" ;
+    rdfs:label "Drill Bit" ;
     skos:altLabel "roller cone bit" ;
     skos:altLabel "PDC bit" ;
-    skos:altLabel "drag bit" ;
-    :inflection "drillbits" .
+    skos:altLabel "drag bit" .
 
 :Driller a owl:Class ;
     rdfs:subClassOf :Personnel ;
@@ -165,22 +156,19 @@
 
 :DrillingRig a owl:Class ;
     rdfs:subClassOf :Equipment ;
-    rdfs:label "DrillingRig" ;
+    rdfs:label "Drilling Rig" ;
     skos:altLabel "land rig" ;
     skos:altLabel "jackup rig" ;
     skos:altLabel "semisub" ;
-    skos:altLabel "drillship" ;
-    :inflection "drillingrigs" .
+    skos:altLabel "drillship" .
 
 :EPARule a owl:Class ;
     rdfs:subClassOf :Regulation ;
-    rdfs:label "EPARule" ;
-    :inflection "eparules" .
+    rdfs:label "EPA Rule" .
 
 :EagleFord a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "EagleFord" ;
-    :inflection "eaglefords" .
+    rdfs:label "Eagle Ford" .
 
 :Equipment a owl:Class ;
     rdfs:label "Equipment" ;
@@ -188,9 +176,8 @@
 
 :ExplorationWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "ExplorationWell" ;
-    skos:altLabel "wildcat" ;
-    :inflection "explorationwells" .
+    rdfs:label "Exploration Well" ;
+    skos:altLabel "wildcat" .
 
 :Explosion a owl:Class ;
     rdfs:subClassOf :Hazard ;
@@ -222,16 +209,14 @@
 
 :FuelOil a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
-    rdfs:label "FuelOil" ;
+    rdfs:label "Fuel Oil" ;
     skos:altLabel "bunker" ;
-    skos:altLabel "heavy fuel oil" ;
-    :inflection "fueloils" .
+    skos:altLabel "heavy fuel oil" .
 
 :GasPlant a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "GasPlant" ;
-    skos:altLabel "gas processing plant" ;
-    :inflection "gasplants" .
+    rdfs:label "Gas Plant" ;
+    skos:altLabel "gas processing plant" .
 
 :Gasoline a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
@@ -242,8 +227,7 @@
 
 :GatheringLine a owl:Class ;
     rdfs:subClassOf :Pipeline ;
-    rdfs:label "GatheringLine" ;
-    :inflection "gatheringlines" .
+    rdfs:label "Gathering Line" .
 
 :Geologist a owl:Class ;
     rdfs:subClassOf :Personnel ;
@@ -254,22 +238,19 @@
 
 :GulfOfMexico a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "GulfOfMexico" ;
-    skos:altLabel "GOM" ;
-    :inflection "gulfofmexicos" .
+    rdfs:label "Gulf Of Mexico" ;
+    skos:altLabel "GOM" .
 
 :H2SExposure a owl:Class ;
     rdfs:subClassOf :Hazard ;
-    rdfs:label "H2SExposure" ;
+    rdfs:label "H2 S Exposure" ;
     skos:altLabel "hydrogen sulfide" ;
-    skos:altLabel "sour gas exposure" ;
-    :inflection "h2sexposures" .
+    skos:altLabel "sour gas exposure" .
 
 :HSEManager a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "HSEManager" ;
-    skos:altLabel "safety manager" ;
-    :inflection "hsemanagers" .
+    rdfs:label "HSE Manager" ;
+    skos:altLabel "safety manager" .
 
 :Hazard a owl:Class ;
     rdfs:label "Hazard" ;
@@ -277,17 +258,15 @@
 
 :HeatExchanger a owl:Class ;
     rdfs:subClassOf :Equipment ;
-    rdfs:label "HeatExchanger" ;
+    rdfs:label "Heat Exchanger" ;
     skos:altLabel "shell-and-tube exchanger" ;
-    skos:altLabel "plate exchanger" ;
-    :inflection "heatexchangers" .
+    skos:altLabel "plate exchanger" .
 
 :HorizontalWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "HorizontalWell" ;
+    rdfs:label "Horizontal Well" ;
     skos:altLabel "horizontal" ;
-    skos:altLabel "lateral well" ;
-    :inflection "horizontalwells" .
+    skos:altLabel "lateral well" .
 
 :Hydrocarbon a owl:Class ;
     rdfs:label "Hydrocarbon" ;
@@ -295,21 +274,18 @@
 
 :ISOStandard a owl:Class ;
     rdfs:subClassOf :Regulation ;
-    rdfs:label "ISOStandard" ;
-    skos:altLabel "ISO" ;
-    :inflection "isostandards" .
+    rdfs:label "ISO Standard" ;
+    skos:altLabel "ISO" .
 
 :InfillWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "InfillWell" ;
-    :inflection "infillwells" .
+    rdfs:label "Infill Well" .
 
 :InjectionWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "InjectionWell" ;
+    rdfs:label "Injection Well" ;
     skos:altLabel "water injector" ;
-    skos:altLabel "gas injector" ;
-    :inflection "injectionwells" .
+    skos:altLabel "gas injector" .
 
 :Inspection a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -337,8 +313,7 @@
 
 :LNGPlant a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "LNGPlant" ;
-    :inflection "lngplants" .
+    rdfs:label "LNG Plant" .
 
 :LPG a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
@@ -350,17 +325,15 @@
 
 :LoggingOperation a owl:Class ;
     rdfs:subClassOf :Operation ;
-    rdfs:label "LoggingOperation" ;
+    rdfs:label "Logging Operation" ;
     skos:altLabel "wireline logging" ;
     skos:altLabel "LWD" ;
-    skos:altLabel "MWD" ;
-    :inflection "loggingoperations" .
+    skos:altLabel "MWD" .
 
 :LossOfContainment a owl:Class ;
     rdfs:subClassOf :Hazard ;
-    rdfs:label "LossOfContainment" ;
-    skos:altLabel "LOC" ;
-    :inflection "lossofcontainments" .
+    rdfs:label "Loss Of Containment" ;
+    skos:altLabel "LOC" .
 
 :Maintenance a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -381,13 +354,11 @@
 
 :MiddleEast a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "MiddleEast" ;
-    :inflection "middleeasts" .
+    rdfs:label "Middle East" .
 
 :MudLogger a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "MudLogger" ;
-    :inflection "mudloggers" .
+    rdfs:label "Mud Logger" .
 
 :NORM a owl:Class ;
     rdfs:subClassOf :Hazard ;
@@ -402,24 +373,21 @@
 
 :NaturalGas a owl:Class ;
     rdfs:subClassOf :Hydrocarbon ;
-    rdfs:label "NaturalGas" ;
+    rdfs:label "Natural Gas" ;
     skos:altLabel "natgas" .
 
 :NorthSea a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "NorthSea" ;
-    :inflection "northseas" .
+    rdfs:label "North Sea" .
 
 :OSHARule a owl:Class ;
     rdfs:subClassOf :Regulation ;
-    rdfs:label "OSHARule" ;
-    skos:altLabel "OSHA" ;
-    :inflection "osharules" .
+    rdfs:label "OSHA Rule" ;
+    skos:altLabel "OSHA" .
 
 :OffshoreBrazil a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "OffshoreBrazil" ;
-    :inflection "offshorebrazils" .
+    rdfs:label "Offshore Brazil" .
 
 :Operation a owl:Class ;
     rdfs:label "Operation" ;
@@ -432,9 +400,8 @@
 
 :PermianBasin a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "PermianBasin" ;
-    skos:altLabel "Permian" ;
-    :inflection "permianbasins" .
+    rdfs:label "Permian Basin" ;
+    skos:altLabel "Permian" .
 
 :Personnel a owl:Class ;
     rdfs:label "Personnel" ;
@@ -464,16 +431,14 @@
 
 :PreSalt a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "PreSalt" ;
-    skos:altLabel "pre-salt" ;
-    :inflection "presalts" .
+    rdfs:label "Pre Salt" ;
+    skos:altLabel "pre-salt" .
 
 :ProcessingUnit a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "ProcessingUnit" ;
+    rdfs:label "Processing Unit" ;
     skos:altLabel "plant unit" ;
-    skos:altLabel "process unit" ;
-    :inflection "processingunits" .
+    skos:altLabel "process unit" .
 
 :Production a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -482,15 +447,13 @@
 
 :ProductionEngineer a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "ProductionEngineer" ;
-    :inflection "productionengineers" .
+    rdfs:label "Production Engineer" .
 
 :ProductionWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "ProductionWell" ;
+    rdfs:label "Production Well" ;
     skos:altLabel "oil producer" ;
-    skos:altLabel "gas producer" ;
-    :inflection "productionwells" .
+    skos:altLabel "gas producer" .
 
 :Pump a owl:Class ;
     rdfs:subClassOf :Equipment ;
@@ -502,8 +465,7 @@
 
 :PumpStation a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "PumpStation" ;
-    :inflection "pumpstations" .
+    rdfs:label "Pump Station" .
 
 :Refinery a owl:Class ;
     rdfs:subClassOf :Facility ;
@@ -524,8 +486,7 @@
 
 :ReservoirEngineer a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "ReservoirEngineer" ;
-    :inflection "reservoirengineers" .
+    rdfs:label "Reservoir Engineer" .
 
 :Riser a owl:Class ;
     rdfs:subClassOf :Pipeline ;
@@ -588,13 +549,11 @@
 
 :SubseaPipeline a owl:Class ;
     rdfs:subClassOf :Pipeline ;
-    rdfs:label "SubseaPipeline" ;
-    :inflection "subseapipelines" .
+    rdfs:label "Subsea Pipeline" .
 
 :SubseaWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "SubseaWell" ;
-    :inflection "subseawells" .
+    rdfs:label "Subsea Well" .
 
 :Tank a owl:Class ;
     rdfs:subClassOf :Equipment ;
@@ -606,9 +565,8 @@
 
 :TankFarm a owl:Class ;
     rdfs:subClassOf :Facility ;
-    rdfs:label "TankFarm" ;
-    skos:altLabel "tank battery" ;
-    :inflection "tankfarms" .
+    rdfs:label "Tank Farm" ;
+    skos:altLabel "tank battery" .
 
 :Terminal a owl:Class ;
     rdfs:subClassOf :Facility ;
@@ -619,13 +577,11 @@
 
 :TightOil a owl:Class ;
     rdfs:subClassOf :Reservoir ;
-    rdfs:label "TightOil" ;
-    :inflection "tightoils" .
+    rdfs:label "Tight Oil" .
 
 :ToolPusher a owl:Class ;
     rdfs:subClassOf :Personnel ;
-    rdfs:label "ToolPusher" ;
-    :inflection "toolpushers" .
+    rdfs:label "Tool Pusher" .
 
 :Trap a owl:Class ;
     rdfs:subClassOf :Reservoir ;
@@ -636,9 +592,8 @@
 
 :TrunkLine a owl:Class ;
     rdfs:subClassOf :Pipeline ;
-    rdfs:label "TrunkLine" ;
-    skos:altLabel "transmission line" ;
-    :inflection "trunklines" .
+    rdfs:label "Trunk Line" ;
+    skos:altLabel "transmission line" .
 
 :Tubing a owl:Class ;
     rdfs:subClassOf :Equipment ;
@@ -663,8 +618,7 @@
 
 :VerticalWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "VerticalWell" ;
-    :inflection "verticalwells" .
+    rdfs:label "Vertical Well" .
 
 :Well a owl:Class ;
     rdfs:label "Well" ;
@@ -672,15 +626,13 @@
 
 :WellTest a owl:Class ;
     rdfs:subClassOf :Operation ;
-    rdfs:label "WellTest" ;
+    rdfs:label "Well Test" ;
     skos:altLabel "DST" ;
-    skos:altLabel "drill stem test" ;
-    :inflection "welltests" .
+    skos:altLabel "drill stem test" .
 
 :WestAfrica a owl:Class ;
     rdfs:subClassOf :Region ;
-    rdfs:label "WestAfrica" ;
-    :inflection "westafricas" .
+    rdfs:label "West Africa" .
 
 :Workover a owl:Class ;
     rdfs:subClassOf :Operation ;
@@ -690,8 +642,7 @@
 
 :WorkoverWell a owl:Class ;
     rdfs:subClassOf :Well ;
-    rdfs:label "WorkoverWell" ;
-    :inflection "workoverwells" .
+    rdfs:label "Workover Well" .
 
 :AtlantisField a :GulfOfMexico ;
     rdfs:label "Atlantis Field" .

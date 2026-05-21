@@ -105,6 +105,34 @@ def render(entities: list[Entity], *, namespace: str, ontology_node: str,
 
 # ----------------------- shared helpers -----------------------
 
+def humanize_camel(s: str) -> str:
+    """Convert a CamelCase identifier into a human-readable label.
+
+    Rules (applied in order):
+      1. Pre-existing whitespace is preserved. If the source already reads
+         like a label ("Christmas Tree"), pass through unchanged.
+      2. Insert a space before each uppercase letter that follows a
+         lowercase letter or digit ("WorkInjuryVisit" -> "Work Injury Visit").
+      3. Insert a space before the last uppercase of a run when the next
+         char is lowercase ("EKGProcedure" -> "EKG Procedure"). This keeps
+         multi-letter acronyms intact instead of collapsing to "E K G".
+      4. Strip a trailing numeric disambiguation suffix like "Burn2" -> "Burn".
+         Two classes that need distinct labels should differ semantically,
+         not by an arbitrary integer.
+    """
+    if " " in s:
+        return s
+    # 4: strip trailing digits used purely for disambiguation.
+    base = re.sub(r"\d+$", "", s) or s
+    # 3: split runs of uppercase before a lowercase tail. "EKGProcedure"
+    # -> "EKG Procedure"; "XRay" -> "X Ray" (not ideal but rare).
+    step1 = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", base)
+    # 2: split between lowercase/digit and uppercase. "WorkInjuryVisit"
+    # -> "Work Injury Visit".
+    step2 = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", step1)
+    return step2
+
+
 def auto_inflection(label: str) -> str | None:
     """Cheap plural for a single-word class label. Skip multi-word labels —
     the surface form 'Drilling Fluid' rarely appears as 'drilling fluids'
@@ -336,10 +364,13 @@ def build_oilgas() -> list[Entity]:
         add(Entity(name, "class", label,
                    inflections=[infl] if infl else []))
 
-    # Subclasses with alt labels and inflections.
+    # Subclasses with alt labels and inflections. The identifier remains
+    # CamelCase (mutato/TTL identifiers must match [A-Za-z_][A-Za-z0-9_]*),
+    # but the rdfs:label is humanized so the tree view shows "Blowout
+    # Preventer" rather than "BlowoutPreventer".
     for parent, subs in OILGAS_SUBCLASSES.items():
         for sub, alts in subs:
-            label = sub
+            label = humanize_camel(sub)
             infl = auto_inflection(label)
             add(Entity(ttl_ident(sub), "class", label,
                        parent=parent,
@@ -510,7 +541,7 @@ HEALTHCARE_SUBCLASSES = {
         ("Bradycardia",        ["slow heart rate"]),
         ("Hypertension",       ["high blood pressure", "HTN"]),
         ("Hypotension",        ["low blood pressure"]),
-        ("Tachypnea",          ["fast breathing"]),
+        ("Tachypnea",          ["fast breathing", "rapid breathing"]),
         ("Hypoxia",            ["low oxygen"]),
         ("Cyanosis",           []),
         ("Pallor",             ["paleness"]),
@@ -519,7 +550,6 @@ HEALTHCARE_SUBCLASSES = {
         ("Lymphadenopathy",    ["swollen lymph nodes"]),
         ("Hepatomegaly",       ["enlarged liver"]),
         ("Splenomegaly",       ["enlarged spleen"]),
-        ("Tachypnea2",         ["rapid breathing"]),
     ],
     "Condition": [
         ("UpperRespiratoryInfection", ["URI", "common cold"]),
@@ -728,11 +758,11 @@ HEALTHCARE_SUBCLASSES = {
         ("ShinglesVaccine", []),
     ],
     "Injury": [
-        ("Laceration2",       ["laceration"]),
+        ("LacerationInjury",  ["laceration"]),
         ("Abrasion",          ["scrape"]),
         ("Contusion",         ["bruise"]),
         ("Puncture",          ["puncture wound"]),
-        ("Burn2",             ["burn injury"]),
+        ("BurnInjury",        ["burn"]),
         ("FractureInjury",    []),
         ("DislocationInjury", []),
         ("SprainInjury",      []),
@@ -795,7 +825,7 @@ def build_healthcare() -> list[Entity]:
 
     for parent, subs in HEALTHCARE_SUBCLASSES.items():
         for sub, alts in subs:
-            label = sub
+            label = humanize_camel(sub)
             infl = auto_inflection(label)
             add(Entity(ttl_ident(sub), "class", label,
                        parent=parent,
