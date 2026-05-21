@@ -1,0 +1,12 @@
+# Same-origin proxy for craigtrim.com/api/mutato/* -> API Gateway.
+# Deploy with:  npx wrangler@latest deploy
+# The CLOUDFLARE_API_TOKEN env var must be set (see worker/README.md).
+
+name = "mutato-api-proxy"
+main = "src/index.js"
+compatibility_date = "2026-05-20"
+
+# Route binding. The zone_name lookup happens via the API token at deploy time.
+routes = [
+  { pattern = "craigtrim.com/api/mutato/*", zone_name = "craigtrim.com" }
+]
