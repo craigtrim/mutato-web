@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Compile lotr-mutato.owl into the MDA JSON dict consumed by:
+"""Compile each *-mutato.owl into the MDA JSON dict consumed by:
 
-  - the Lambda (../lambda/ontologies/lotr.json)
-  - the frontend's left-rail class tree (../frontend/public/data/lotr.json)
-  - this directory's canonical artifact (./lotr-mutato.json)
+  - the Lambda (../lambda/ontologies/{id}.json)
+  - the frontend's left-rail class tree (../frontend/public/data/{id}.json)
+  - this directory's canonical artifact (./{name}.json)
 
 Usage:
     pip install -r requirements.txt
@@ -19,32 +19,49 @@ from mutato.api import OntologyParser
 HERE = Path(__file__).resolve().parent
 REPO_ROOT = HERE.parent
 
-OWL_PATH = HERE / "lotr-mutato.owl"
-NAMESPACE = "https://craigtrim.com/ontologies/lotr-mutato"
 
-LOCAL_JSON = HERE / "lotr-mutato.json"
-FRONTEND_JSON = REPO_ROOT / "frontend" / "public" / "data" / "lotr.json"
-LAMBDA_JSON = REPO_ROOT / "lambda" / "ontologies" / "lotr.json"
+# (owl filename, frontend/lambda id, namespace)
+TARGETS = [
+    ("lotr-mutato.owl",       "lotr",
+     "https://craigtrim.com/ontologies/lotr-mutato"),
+    ("oilgas-mutato.owl",     "oilgas",
+     "https://craigtrim.com/ontologies/oilgas-mutato"),
+    ("healthcare-mutato.owl", "healthcare",
+     "https://craigtrim.com/ontologies/healthcare-mutato"),
+]
 
 
-def main() -> None:
-    if not OWL_PATH.exists():
-        raise FileNotFoundError(f"Source OWL not found: {OWL_PATH}")
+def compile_one(owl_name: str, ont_id: str, namespace: str) -> None:
+    owl_path = HERE / owl_name
+    if not owl_path.exists():
+        raise FileNotFoundError(f"Source OWL not found: {owl_path}")
 
-    print(f"Compiling {OWL_PATH.name} via OntologyParser...")
-    op = OntologyParser(OWL_PATH, namespace=NAMESPACE)
+    print(f"Compiling {owl_path.name} via OntologyParser...")
+    op = OntologyParser(owl_path, namespace=namespace)
     d_owl = op.to_dict()
 
     payload = json.dumps(d_owl, indent=2, sort_keys=True)
 
-    for target in (LOCAL_JSON, FRONTEND_JSON, LAMBDA_JSON):
+    targets = [
+        HERE / f"{owl_path.stem}.json",
+        REPO_ROOT / "frontend" / "public" / "data" / f"{ont_id}.json",
+        REPO_ROOT / "lambda" / "ontologies" / f"{ont_id}.json",
+    ]
+
+    for target in targets:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(payload)
         print(f"  wrote {target.relative_to(REPO_ROOT)}")
 
     n_labels = len(d_owl.get("labels", {}))
     n_synonyms = len(d_owl.get("synonyms", {}).get("fwd", {}))
-    print(f"\nCompiled {n_labels} labels, {n_synonyms} synonym entries.")
+    print(f"  {n_labels} labels, {n_synonyms} synonym entries.")
+
+
+def main() -> None:
+    for owl_name, ont_id, namespace in TARGETS:
+        compile_one(owl_name, ont_id, namespace)
+        print()
 
 
 if __name__ == "__main__":
