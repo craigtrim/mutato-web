@@ -12,7 +12,7 @@ Request:
 { "text": "string (<=5000 chars)", "ontology": "lotr" }
 ```
 
-`ontology` is optional and defaults to `"lotr"`. Valid values: `"lotr"`, `"animals-test"`, `"music-test"`.
+`ontology` is optional and defaults to `"lotr"`. Valid values: `"lotr"`, `"oilgas"`, `"healthcare"`.
 
 Response 200:
 

@@ -26,7 +26,7 @@ MAX_TEXT_LENGTH = 5000
 MAX_TTL_LENGTH = 400_000
 MAX_CACHED_INLINE_PARSERS = 20
 ONTOLOGIES_DIR = Path(__file__).resolve().parent / "ontologies"
-VALID_ONTOLOGIES = {"lotr", "animals-test", "music-test"}
+VALID_ONTOLOGIES = {"lotr", "oilgas", "healthcare"}
 
 # Origin allow-list. Requests whose Origin header is not in this set are
 # rejected with 403, including requests with no Origin header. Browsers set
@@ -106,7 +106,7 @@ def handler(event, context):
     Expected input (via API Gateway POST):
     {
         "text": "any input sentence (<= 5000 chars)",
-        "ontology": "lotr",          // pre-baked id (lotr, animals-test, music-test)
+        "ontology": "lotr",          // pre-baked id (lotr, oilgas, healthcare)
         "ontology_ttl": "..."         // optional: full TTL/OWL source; takes
                                       //   precedence over `ontology`. Hash-cached
                                       //   server-side so repeated extracts on the
