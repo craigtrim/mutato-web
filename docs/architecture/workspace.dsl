@@ -1,7 +1,7 @@
 workspace "mutato-web" "Live ontology-driven entity-extraction demo" {
 
     model {
-        visitor = person "Demo visitor" "Anyone trying the live demo at craigtrim.com/demos/mutato/"
+        visitor = person "Demo visitor" "Anyone trying the live demo at d1417qhlp96qo6.cloudfront.net/mutato/"
         maintainer = person "Maintainer" "Pushes deploys to S3 and Lambda"
 
         mutatoWeb = softwareSystem "mutato-web" "Live demo SPA plus Lambda that compiles user-edited TTL on-the-fly and runs ontology-driven entity extraction" {
