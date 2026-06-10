@@ -28,11 +28,10 @@ MAX_CACHED_INLINE_PARSERS = 20
 ONTOLOGIES_DIR = Path(__file__).resolve().parent / "ontologies"
 VALID_ONTOLOGIES = {"lotr", "oilgas", "healthcare", "smoketest"}
 
-# Origin allow-list. Requests whose Origin header is not in this set are
-# rejected with 403, including requests with no Origin header. Browsers set
-# Origin automatically on cross-origin requests; CLI clients can spoof it, so
-# this is defense in depth, not a security boundary.
-ALLOWED_ORIGINS = frozenset({"https://craigtrim.com"})
+# CORS is wildcard on COSC, consistent with the other demo backends (issue
+# #175, Round 2). The old craigtrim.com origin allow-list was a spoofable
+# defense-in-depth check; abuse and cost control belongs in throttling and WAF
+# (issue #142), not a browser-set Origin header.
 
 # Cache for pre-baked ontologies. Unbounded because the keys are a fixed
 # whitelist.
@@ -255,16 +254,14 @@ def _request_origin(headers):
 
 
 def _matched_origin(request_origin):
-    """Return the request's Origin if it is in ALLOWED_ORIGINS, else ''."""
-    return request_origin if request_origin in ALLOWED_ORIGINS else ""
+    """COSC: wildcard CORS (issue #175). Always allow; the response carries
+    Access-Control-Allow-Origin: * so any origin, including none, is accepted."""
+    return "*"
 
 
 def _cors_origin_header(matched_origin):
-    """Single-key dict with Access-Control-Allow-Origin, or empty if not allowed.
-
-    Omitting the header for rejected origins causes the browser to block the
-    response, which is the intended behavior. We do not fall back to '*'.
-    """
+    """Single-key dict with Access-Control-Allow-Origin. On COSC matched_origin
+    is always '*' (issue #175), so this returns the wildcard header."""
     return {"Access-Control-Allow-Origin": matched_origin} if matched_origin else {}
 
 

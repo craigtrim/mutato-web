@@ -5,7 +5,9 @@ FROM lambda-base:3.11-amd64
 # x86_64 (not arm64) because spaCy 3.8.2 only publishes Linux x86_64 wheels;
 # mutato pins to that version and the slim Amazon Linux 2 base has no gcc, so
 # building spaCy from source on arm64 is not viable.
-RUN pip install --no-cache-dir --timeout 300 mutato \
+# click is installed explicitly: newer typer ships as typer-slim without click,
+# but spaCy's CLI (used by `spacy download`) imports click directly.
+RUN pip install --no-cache-dir --timeout 300 mutato click \
     && python -m spacy download en_core_web_sm
 
 # Bake the pre-compiled ontology dicts into the image so cold starts do not

@@ -24,7 +24,7 @@ cd frontend
 npm install
 npm run dev          # local dev server
 npm run build        # production bundle -> dist/
-aws s3 sync dist/ s3://craigtrim.com/demos/mutato/ --profile dwc_s3
+aws s3 sync dist/ s3://cosc-demos-069163481355/mutato/ --profile cosc_s3
 ```
 
 ## Lambda

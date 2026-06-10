@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The web face of [mutato](https://github.com/craigtrim/mutato), a Python entity-extraction library with no LLM in the loop. Three subprojects that ship together:
 
-- `frontend/` — Vite 5 + React 18 SPA deployed to `s3://craigtrim.com/demos/mutato/`. In-browser ontology editor + extract UI.
+- `frontend/` — Vite 5 + React 18 SPA deployed to `s3://cosc-demos-069163481355/mutato/` on COSC. In-browser ontology editor + extract UI.
 - `lambda/` — `mutato-extractor` Docker Lambda (Python 3.11 **x86_64**, `us-west-2`). Compiles user-edited TTL on-the-fly and runs mutato's three matching passes.
 - `ontologies/` — OWL/Turtle source of truth + a build script that compiles the TTL into an MDA JSON dict consumed by both the frontend tree and the Lambda parser.
 
@@ -48,7 +48,7 @@ cd frontend
 npm install
 npm run dev                                  # local dev server (Vite)
 npm run build                                # production bundle -> dist/
-aws s3 sync dist/ s3://craigtrim.com/demos/mutato/ --profile dwc_s3
+aws s3 sync dist/ s3://cosc-demos-069163481355/mutato/ --profile cosc_s3
 ```
 
 ### Lambda
@@ -56,7 +56,7 @@ aws s3 sync dist/ s3://craigtrim.com/demos/mutato/ --profile dwc_s3
 cd lambda
 ./update.sh                                  # build linux/amd64 image, push to ECR, update function
 ```
-The script auto-bumps the patch version above the latest ECR tag. AWS profile: `dwc_lambda`. Region: `us-west-2`. Account: `210182908261`.
+The script auto-bumps the patch version above the latest ECR tag. AWS profile: `cosc_lambda`. Region: `us-west-2`. Account: `069163481355` (COSC). It creates the ECR repo, repo policy, and log group, then creates-or-updates the function. The frontend is served from the COSC CloudFront distribution; the API base lives in `frontend/public/cosc-config.js` (issue #175).
 
 ### Ontology rebuild
 ```bash
