@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const BASE_URL = process.env.SMOKE_URL ?? 'https://craigtrim.com/product/mutato/'
+const BASE_URL = process.env.SMOKE_URL ?? 'https://d1417qhlp96qo6.cloudfront.net/mutato/'
 
 export default defineConfig({
   testDir: './tests',

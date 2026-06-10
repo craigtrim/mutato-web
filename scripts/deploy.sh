@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Build, deploy, and smoke-test the mutato-web frontend.
+# Build, deploy, and smoke-test the mutato-web frontend on the COSC account
+# (craigtrim/cosc-agentic-systems#175).
 #
 # Modes:
 #   ./scripts/deploy.sh                # full: build + sync + smoke
@@ -11,9 +12,12 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 MODE="${1:-full}"
 
-S3_PATH="s3://craigtrim.com/product/mutato/"
-AWS_PROFILE_NAME="dwc_s3"
-LIVE_URL="https://craigtrim.com/product/mutato/"
+# COSC: served from the cosc-demos bucket behind CloudFront. The API base is in
+# frontend/public/cosc-config.js and must stay no-cache so it is re-pointable in
+# place; the content-hashed assets are immutable.
+S3_PATH="s3://cosc-demos-069163481355/mutato/"
+AWS_PROFILE_NAME="cosc_s3"
+LIVE_URL="https://d1417qhlp96qo6.cloudfront.net/mutato/"
 
 case "$MODE" in
   full|--smoke-only|--no-smoke) ;;
@@ -27,8 +31,15 @@ if [[ "$MODE" != "--smoke-only" ]]; then
   echo "==> Building frontend"
   (cd "$ROOT/frontend" && npm run build)
 
-  echo "==> Syncing to $S3_PATH"
-  aws s3 sync "$ROOT/frontend/dist/" "$S3_PATH" --profile "$AWS_PROFILE_NAME"
+  echo "==> Syncing to $S3_PATH (two-step: immutable assets, no-cache html/config)"
+  aws s3 sync "$ROOT/frontend/dist/" "$S3_PATH" \
+    --exclude index.html --exclude cosc-config.js \
+    --cache-control "public, max-age=31536000, immutable" \
+    --profile "$AWS_PROFILE_NAME"
+  aws s3 cp "$ROOT/frontend/dist/index.html" "$S3_PATH/index.html" \
+    --cache-control "no-cache" --profile "$AWS_PROFILE_NAME"
+  aws s3 cp "$ROOT/frontend/dist/cosc-config.js" "$S3_PATH/cosc-config.js" \
+    --cache-control "no-cache" --profile "$AWS_PROFILE_NAME"
 
   echo "==> Waiting 5s for propagation"
   sleep 5

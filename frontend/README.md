@@ -16,7 +16,7 @@ Part of the Week 6 ontology / agent-memory sequence:
 
 ## Live URL
 
-https://craigtrim.com/demos/mutato/ (pending deployment)
+https://d1417qhlp96qo6.cloudfront.net/mutato/
 
 ## Architecture
 
@@ -32,7 +32,7 @@ npm install
 npm run dev          # local dev server
 npm run build        # production bundle -> dist/
 # Deploy only after dropping the .draft suffix and getting explicit author sign-off.
-# aws s3 sync dist/ s3://craigtrim.com/demos/mutato/ --profile dwc_s3
+# deployed via ../scripts/deploy.sh (s3://cosc-demos-069163481355/mutato/, profile cosc_s3)
 ```
 
 The Lambda endpoint URL is wired into `config.js`. Until the Lambda is provisioned, the demo runs in a degraded "backend pending" state: the class tree and sample sentences are visible, but the extract button surfaces a notice instead of calling the backend.

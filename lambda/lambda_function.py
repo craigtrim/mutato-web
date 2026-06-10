@@ -151,17 +151,7 @@ def handler(event, context):
         logger.info("Handling CORS preflight")
         return _cors_preflight(matched_origin)
 
-    if not matched_origin:
-        logger.warning("ORIGIN_REJECTED: %s", json.dumps({
-            "log_type": "ORIGIN_REJECTED",
-            "request_id": request_id,
-            "source_ip": source_ip,
-            "origin": request_origin or "missing",
-        }))
-        return _error_response(403, "Origin not allowed",
-                               matched_origin=matched_origin,
-                               request_id=request_id, start_time=start_time,
-                               is_cold_start=is_cold_start)
+    # CORS is wildcard on COSC (#175), so there is no origin-based rejection.
 
     try:
         body = event.get("body", "{}")

@@ -1,6 +1,6 @@
 # mutato-web
 
-Web frontend, Lambda backend, and ontology source for the live ontology-driven entity-extraction demo at **https://craigtrim.com/demos/mutato/**.
+Web frontend, Lambda backend, and ontology source for the live ontology-driven entity-extraction demo, served from the COSC CloudFront origin at **https://d1417qhlp96qo6.cloudfront.net/mutato/**.
 
 The matching engine is [mutato](https://github.com/craigtrim/mutato), a Python library for ontology-driven NLP with no LLM in the loop. This repo contains everything that runs around it on the web side.
 
@@ -29,7 +29,7 @@ aws s3 sync dist/ s3://cosc-demos-069163481355/mutato/ --profile cosc_s3
 
 ## Lambda
 
-`mutato-extractor` Lambda. Accepts a pre-baked ontology id OR an inline TTL string and runs mutato's three matching passes (exact, span, hierarchy). Hash-keyed LRU cache (20 entries) on inline TTLs so repeated extracts on the same edited ontology are warm. Origin allow-list enforcement (`https://craigtrim.com`) for defense in depth — see issue #1.
+`mutato-extractor` Lambda. Accepts a pre-baked ontology id OR an inline TTL string and runs mutato's three matching passes (exact, span, hierarchy). Hash-keyed LRU cache (20 entries) on inline TTLs so repeated extracts on the same edited ontology are warm. CORS is wildcard, consistent with the other COSC demo backends; abuse control lives in throttling and WAF (craigtrim/cosc-agentic-systems#142).
 
 ```bash
 cd lambda
@@ -38,14 +38,14 @@ cd lambda
 
 | Resource | Value |
 |---|---|
-| Function | `mutato-extractor` |
+| Function | `cosc-mutato-extractor` |
 | Region | `us-west-2` |
-| ECR repo | `mutato-extractor-repo` |
-| API Gateway ID | `340cnsxykj` |
+| ECR repo | `cosc-mutato-extractor` |
+| API Gateway | `cosc-demos-api` (`byw8gzkae2`) |
 | Stage / path | `prod` / `POST /mutato_extractor_post` |
 | Architecture | x86_64 (mutato pins spaCy 3.8.2 which has no Linux aarch64 wheel) |
 
-Endpoint: `https://340cnsxykj.execute-api.us-west-2.amazonaws.com/prod/mutato_extractor_post`.
+Endpoint: `https://byw8gzkae2.execute-api.us-west-2.amazonaws.com/prod/mutato_extractor_post`.
 
 ## Ontologies
 
