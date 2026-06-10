@@ -10,7 +10,7 @@ The web face of [mutato](https://github.com/craigtrim/mutato), a Python entity-e
 - `lambda/` — `mutato-extractor` Docker Lambda (Python 3.11 **x86_64**, `us-west-2`). Compiles user-edited TTL on-the-fly and runs mutato's three matching passes.
 - `ontologies/` — OWL/Turtle source of truth + a build script that compiles the TTL into an MDA JSON dict consumed by both the frontend tree and the Lambda parser.
 
-Live URL: <https://craigtrim.com/demos/mutato/>. Lambda endpoint: `https://340cnsxykj.execute-api.us-west-2.amazonaws.com/prod/mutato_extractor_post`.
+Live URL: <https://d1417qhlp96qo6.cloudfront.net/mutato/> (COSC CloudFront). Lambda endpoint: `https://byw8gzkae2.execute-api.us-west-2.amazonaws.com/prod/mutato_extractor_post`.
 
 ## Architecture: the round-trip
 
@@ -69,7 +69,7 @@ python mutato-build.py                       # rewrites all three JSON targets
 
 - **x86_64, not arm64.** mutato pins spaCy 3.8.2 which publishes no Linux aarch64 wheels and the slim AL2 base has no gcc. The Lambda is `linux/amd64`; do not change this in the Dockerfile or `update.sh`.
 - **Cold start ~2.5–3.5s, warm <500ms.** Most of it is `MutatoAPI.__init__` loading `en_core_web_sm`. The frontend shows a "warming up..." hint after 600 ms of loading.
-- **Origin allow-list is enforced server-side.** `ALLOWED_ORIGINS = {"https://craigtrim.com"}`. Requests with no `Origin` header or a non-matching one get `403`. Rejected origins receive no `Access-Control-Allow-Origin`, so browsers block the response. CLI clients can spoof Origin — this is defense in depth, not a security boundary.
+- **CORS is wildcard** (craigtrim/cosc-agentic-systems#175), consistent with the other COSC demo backends. The Lambda returns `Access-Control-Allow-Origin: *` and does not reject by origin. Abuse and cost control belongs in throttling and WAF (#142), not a spoofable Origin check.
 - **Request limits:** text ≤ 5000 chars (413), inline TTL ≤ 400,000 chars (413). Valid pre-baked ontology ids: `lotr`, `oilgas` (1024 entities, Oil & Gas), `healthcare` (8192 entities, Urgent Care). The healthcare and oilgas ontologies are too large to round-trip as inline TTL — they exceed the 400,000-char cap, so editing them in the demo and clicking Extract will 413. Demo treats this as a known limitation; the un-edited path uses the baked `ontology` id and works fine.
 - **`tokens` vs `matches`.** mutato returns rich token dicts; the Lambda projects them to a flat match ledger via `_summarize()`. Note that mutato returns canonical names lowercased — the frontend keeps a `canonToLabel` map to surface proper-case labels in tooltips and the ledger.
 - **Match-type key alias.** mutato sometimes returns `spans` (plural) for span-pass matches; `MATCH_TYPE_COLORS` includes both `span` and `spans` for forward compatibility.

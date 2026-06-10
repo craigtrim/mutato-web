@@ -25,13 +25,11 @@ Response 200:
 }
 ```
 
-Errors: `400` missing/unknown ontology, `400` empty text, `413` text > 5000 chars, `413` ontology TTL > 400,000 chars, `403` Origin not allowed, `500` parser failure.
+Errors: `400` missing/unknown ontology, `400` empty text, `413` text > 5000 chars, `413` ontology TTL > 400,000 chars, `500` parser failure.
 
-## Origin allow-list
+## CORS
 
-Requests are accepted only when the `Origin` header matches an entry in `ALLOWED_ORIGINS` (currently `{"https://craigtrim.com"}`). Requests with no `Origin` header are also rejected with `403`. CORS preflight (`OPTIONS`) echoes the matched origin in `Access-Control-Allow-Origin`; rejected origins receive no `Access-Control-Allow-Origin` header at all, so browsers block the response.
-
-This is defense in depth, not a security boundary: CLI clients can forge the `Origin` header. Per-IP rate limiting belongs at WAF; see issue #142 for the full perimeter plan.
+CORS is wildcard (craigtrim/cosc-agentic-systems#175): the Lambda returns `Access-Control-Allow-Origin: *` on every response and the preflight, consistent with the other COSC demo backends. It does not reject by origin. Abuse and per-IP rate limiting belong at WAF; see #142 for the full perimeter plan.
 
 ## Sample curl
 
@@ -53,7 +51,7 @@ Cold start runs roughly 2.5 to 3.5 seconds: most of it is spaCy `en_core_web_sm`
 ./update.sh
 ```
 
-Calls `infra/resources/update-lambda.sh --repo-name mutato-extractor-repo`, which builds the linux/arm64 image, pushes to ECR, and points the function at the new tag.
+Self-contained: builds the linux/amd64 image, ensures the `cosc-mutato-extractor` ECR repo, its Lambda-pull policy, and the log group exist, pushes, and creates-or-updates the `cosc-mutato-extractor` function on the shared `cosc/cosc-lambda-exec` role.
 
 ## Ontology rebuild
 

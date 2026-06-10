@@ -1,6 +1,6 @@
 # Smoke tests
 
-Ten atomic Playwright tests against the deployed demo at <https://craigtrim.com/product/mutato/>. Each test asserts one invariant. No shared state, no fixtures.
+Ten atomic Playwright tests against the deployed demo at <https://d1417qhlp96qo6.cloudfront.net/mutato/>. Each test asserts one invariant. No shared state, no fixtures.
 
 ## Setup (one-time)
 
